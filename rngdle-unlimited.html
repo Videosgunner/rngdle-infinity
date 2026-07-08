@@ -13,530 +13,487 @@
         }
 
         :root {
-            --primary: #6366f1;
-            --secondary: #ec4899;
-            --bg: #0a0e27;
-            --surface: #131829;
-            --text: #f8fafc;
-            --text-dim: #94a3b8;
-            --common: #10b981;
-            --uncommon: #3b82f6;
-            --rare: #a855f7;
-            --epic: #f59e0b;
-            --anomaly: #ef4444;
-            --mythic: #fbbf24;
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --text-muted: #808080;
+            --border: #333333;
+            --common: #2d5016;
+            --uncommon: #0f4c75;
+            --rare: #5a189a;
+            --epic: #d4a574;
+            --anomaly: #931e18;
+            --mythic: #d4af37;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 900px;
-            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         header {
+            padding: 40px 0 30px;
             text-align: center;
-            margin-bottom: 60px;
-            animation: slideDown 0.6s ease-out;
+            border-bottom: 1px solid var(--border);
         }
 
         h1 {
-            font-size: 2.8em;
+            font-size: 2.5em;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             letter-spacing: -1px;
         }
 
         .subtitle {
-            color: var(--text-dim);
-            font-size: 0.95em;
+            color: var(--text-muted);
+            font-size: 1em;
             font-weight: 400;
         }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .main-section {
+            padding: 60px 0;
+            text-align: center;
         }
 
-        .game-container {
-            background: var(--surface);
-            border-radius: 20px;
-            padding: 60px 40px;
-            margin-bottom: 50px;
-            animation: slideUp 0.6s ease-out 0.1s both;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        .number-prompt {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            margin-bottom: 30px;
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .number-box {
+            display: inline-block;
+            border: 3px solid var(--border);
+            border-radius: 12px;
+            padding: 30px 50px;
+            font-size: 4em;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            margin: 30px 0;
+            min-width: 300px;
+            letter-spacing: 3px;
+            animation: numberAppear 0.5s ease-out;
+        }
+
+        .number-box.common { border-color: var(--common); color: var(--common); }
+        .number-box.uncommon { border-color: var(--uncommon); color: var(--uncommon); }
+        .number-box.rare { border-color: var(--rare); color: var(--rare); }
+        .number-box.epic { border-color: var(--epic); color: var(--epic); }
+        .number-box.anomaly { border-color: var(--anomaly); color: var(--anomaly); }
+        .number-box.mythic { border-color: var(--mythic); color: var(--mythic); }
+
+        @keyframes numberAppear {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .roll-button {
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto;
             display: block;
-            padding: 18px 40px;
+            width: 100%;
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 16px 40px;
+            background: #000000;
+            color: var(--text);
+            border: 1px solid var(--border);
             font-size: 1.1em;
-            font-weight: 600;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s ease;
+            border-radius: 4px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
         }
 
-        .roll-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .roll-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
-        }
-
-        .roll-button:active {
-            transform: translateY(-1px);
+        .roll-button:hover:not(:disabled) {
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
         }
 
         .roll-button:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
-        .number-display {
-            text-align: center;
-            margin: 50px 0 40px;
-            min-height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulse-in 0.5s ease-out;
-        }
-
-        @keyframes pulse-in {
-            0% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .number-value {
-            font-size: 4.5em;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
-        }
-
-        .rarity-display {
-            text-align: center;
+        .rarity-info {
             margin: 30px 0;
-            animation: fadeIn 0.4s ease-out 0.2s both;
+            font-size: 0.95em;
         }
 
-        .rarity-label {
-            font-size: 0.85em;
-            color: var(--text-dim);
+        .rarity-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin: 0 5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .rarity-tag.common { border-color: var(--common); color: var(--common); }
+        .rarity-tag.uncommon { border-color: var(--uncommon); color: var(--uncommon); }
+        .rarity-tag.rare { border-color: var(--rare); color: var(--rare); }
+        .rarity-tag.epic { border-color: var(--epic); color: var(--epic); }
+        .rarity-tag.anomaly { border-color: var(--anomaly); color: var(--anomaly); }
+        .rarity-tag.mythic { border-color: var(--mythic); color: var(--mythic); }
+
+        .ep-display {
+            color: var(--anomaly);
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-top: 15px;
+            letter-spacing: 1px;
+        }
+
+        .badge-breakdown {
+            margin-top: 50px;
+            text-align: left;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .breakdown-title {
+            font-size: 1.1em;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .badge-count-label {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .badge-item {
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--border);
+            border-radius: 4px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .badge-item:hover {
+            background: #222222;
+            border-left-color: var(--text);
+        }
+
+        .badge-item.common { border-left-color: var(--common); }
+        .badge-item.uncommon { border-left-color: var(--uncommon); }
+        .badge-item.rare { border-left-color: var(--rare); }
+        .badge-item.epic { border-left-color: var(--epic); }
+        .badge-item.anomaly { border-left-color: var(--anomaly); }
+        .badge-item.mythic { border-left-color: var(--mythic); }
+
+        .badge-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             margin-bottom: 8px;
         }
 
-        .rarity-value {
-            font-size: 1.8em;
-            font-weight: 600;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .badge-emoji {
+            font-size: 1.5em;
         }
 
-        .badges-earned {
-            margin-top: 40px;
+        .badge-name-rarity {
+            flex: 1;
+        }
+
+        .badge-name {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-rarity {
+            font-size: 0.75em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-ep {
+            font-weight: 700;
+            color: var(--anomaly);
+            font-size: 0.9em;
+            margin-left: auto;
+        }
+
+        .badge-description {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .badge-digits {
             display: flex;
+            gap: 6px;
             flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            animation: fadeIn 0.4s ease-out 0.3s both;
         }
 
-        .badge-earned {
-            display: flex;
-            flex-direction: column;
+        .digit-box {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 70px;
-            height: 70px;
-            border-radius: 12px;
-            border: 2px solid;
-            font-weight: 600;
-            font-size: 0.7em;
-            cursor: pointer;
-            position: relative;
-            animation: badgePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 28px;
+            height: 28px;
+            background: var(--uncommon);
+            color: var(--bg);
+            font-weight: 700;
+            font-size: 0.85em;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
         }
 
-        @keyframes badgePop {
-            0% {
-                transform: scale(0);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
+        .digit-box.none { background: #333333; color: var(--text-muted); }
+        .digit-box.common { background: var(--common); }
+        .digit-box.uncommon { background: var(--uncommon); }
+        .digit-box.rare { background: var(--rare); }
+        .digit-box.epic { background: var(--epic); }
+        .digit-box.anomaly { background: var(--anomaly); }
 
-        .badge-earned:hover {
-            transform: scale(1.1);
-        }
-
-        .badge-earned .badge-tooltip {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--bg);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.75em;
-            white-space: nowrap;
-            border: 1px solid var(--primary);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-            margin-bottom: 8px;
-        }
-
-        .badge-earned:hover .badge-tooltip {
-            opacity: 1;
-        }
-
-        .rarity-common { background: var(--common); border-color: var(--common); }
-        .rarity-uncommon { background: var(--uncommon); border-color: var(--uncommon); }
-        .rarity-rare { background: var(--rare); border-color: var(--rare); }
-        .rarity-epic { background: var(--epic); border-color: var(--epic); }
-        .rarity-anomaly { background: var(--anomaly); border-color: var(--anomaly); }
-        .rarity-mythic { background: var(--mythic); border-color: var(--mythic); color: #000; }
-
-        .stats {
+        .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            margin-bottom: 50px;
-            animation: slideUp 0.6s ease-out 0.2s both;
+            margin: 60px 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .stat {
-            background: var(--surface);
+        .stat-box {
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 4px;
             padding: 25px;
-            border-radius: 16px;
             text-align: center;
             transition: all 0.3s ease;
         }
 
-        .stat:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        .stat-box:hover {
+            background: #222222;
+            border-color: var(--text);
         }
 
-        .stat-value {
+        .stat-number {
             font-size: 2.2em;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
             margin-bottom: 8px;
+            color: var(--text);
         }
 
         .stat-label {
             font-size: 0.85em;
-            color: var(--text-dim);
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
-        .collection {
-            background: var(--surface);
-            border-radius: 20px;
-            padding: 50px 40px;
-            margin-bottom: 50px;
-            animation: slideUp 0.6s ease-out 0.3s both;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        .section {
+            margin: 60px 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .section-title {
-            font-size: 1.6em;
+        .section-header {
+            font-size: 1.1em;
             font-weight: 700;
-            margin-bottom: 30px;
-            letter-spacing: -0.5px;
-        }
-
-        .progress-bar {
-            background: rgba(255, 255, 255, 0.05);
-            height: 6px;
-            border-radius: 3px;
-            overflow: hidden;
+            text-transform: uppercase;
             margin-bottom: 20px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: width 0.4s ease;
-            border-radius: 3px;
-        }
-
-        .progress-text {
-            font-size: 0.9em;
-            color: var(--text-dim);
-            margin-bottom: 15px;
+            letter-spacing: 1px;
         }
 
         .badge-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             gap: 12px;
         }
 
         .badge-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 18px;
-            border-radius: 14px;
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 15px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border: 2px solid;
-            min-height: 110px;
-            position: relative;
+            transition: all 0.3s ease;
         }
 
         .badge-card:hover:not(.locked) {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            background: #222222;
+            border-color: var(--text);
+            transform: translateY(-3px);
         }
 
         .badge-card.locked {
-            opacity: 0.35;
+            opacity: 0.3;
             cursor: default;
         }
 
-        .badge-emoji {
-            font-size: 2.2em;
+        .badge-card-emoji {
+            font-size: 2em;
             margin-bottom: 8px;
         }
 
-        .badge-name {
+        .badge-card-name {
             font-weight: 600;
-            font-size: 0.8em;
+            font-size: 0.85em;
             margin-bottom: 4px;
-            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .badge-count {
-            font-size: 0.75em;
-            opacity: 0.8;
-        }
-
-        .history {
-            background: var(--surface);
-            border-radius: 20px;
-            padding: 50px 40px;
-            animation: slideUp 0.6s ease-out 0.4s both;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        .badge-card-count {
+            font-size: 0.8em;
+            color: var(--text-muted);
         }
 
         .history-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            max-height: 400px;
-            overflow-y: auto;
+            gap: 10px;
         }
 
         .history-item {
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
             transition: all 0.3s ease;
-            border-left: 3px solid var(--primary);
         }
 
         .history-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateX(5px);
+            background: #222222;
+            border-color: var(--text);
         }
 
         .history-number {
-            font-size: 1.4em;
+            font-size: 1.3em;
             font-weight: 700;
-            color: var(--primary);
             font-family: 'Courier New', monospace;
         }
 
-        .history-meta {
-            font-size: 0.85em;
-            color: var(--text-dim);
-        }
-
-        .history-ep {
-            color: var(--primary);
-            font-weight: 600;
+        .history-time {
+            font-size: 0.8em;
+            color: var(--text-muted);
         }
 
         .clear-btn {
-            background: var(--secondary);
-            color: white;
-            border: none;
+            background: #000000;
+            color: var(--text);
+            border: 1px solid var(--border);
             padding: 12px 24px;
-            border-radius: 8px;
+            margin-top: 20px;
             cursor: pointer;
             font-weight: 600;
-            margin-top: 25px;
+            border-radius: 4px;
             transition: all 0.3s ease;
+            text-transform: uppercase;
             font-size: 0.9em;
+            letter-spacing: 1px;
         }
 
         .clear-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
         }
 
-        @media (max-width: 640px) {
-            .game-container, .collection, .history {
-                padding: 40px 25px;
-            }
-
-            h1 {
-                font-size: 2.2em;
-            }
-
-            .number-value {
-                font-size: 3em;
-            }
-
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .badge-grid {
-                grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
-            }
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8em; }
+            .number-box { font-size: 2.5em; padding: 20px 30px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .badge-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎲 RNGdle Unlimited</h1>
-            <p class="subtitle">Roll infinite numbers. Collect badges. No limits.</p>
+            <h1>RNGdle Unlimited</h1>
+            <p class="subtitle">Infinite rolls. Unlimited badges. No daily limits.</p>
         </header>
 
-        <div class="game-container">
-            <button class="roll-button" onclick="rollNumber()">🎲 Roll</button>
+        <div class="main-section">
+            <p class="number-prompt">What number will you roll?</p>
             
+            <button class="roll-button" onclick="rollNumber()">Generate</button>
+
             <div id="resultSection" style="display: none;">
-                <div class="number-display">
-                    <div class="number-value" id="numberValue">0</div>
+                <div class="number-box" id="numberBox">
+                    <span id="numberValue">0</span>
                 </div>
 
-                <div class="rarity-display">
-                    <div class="rarity-label">Rarity</div>
-                    <div class="rarity-value" id="rarityDisplay">—</div>
+                <div class="rarity-info">
+                    <span class="rarity-tag" id="rarityTag">—</span>
+                    <span class="rarity-tag" id="percentileTag">—</span>
                 </div>
 
-                <div class="badges-earned" id="earnedBadges"></div>
+                <div class="ep-display" id="epDisplay">0 EP</div>
+
+                <div class="badge-breakdown" id="badgeBreakdown" style="display: none;">
+                    <div class="breakdown-title">Badge Breakdown</div>
+                    <div class="badge-count-label" id="badgeCountLabel">0 badges earned</div>
+                    <div id="earnedBadges"></div>
+                </div>
             </div>
         </div>
 
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-value" id="totalRolls">0</div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number" id="totalRolls">0</div>
                 <div class="stat-label">Total Rolls</div>
             </div>
-            <div class="stat">
-                <div class="stat-value" id="totalEP">0</div>
-                <div class="stat-label">Entropy Points</div>
+            <div class="stat-box">
+                <div class="stat-number" id="totalEP">0</div>
+                <div class="stat-label">Lifetime EP</div>
             </div>
-            <div class="stat">
-                <div class="stat-value" id="uniqueBadges">0</div>
+            <div class="stat-box">
+                <div class="stat-number" id="uniqueBadges">0</div>
                 <div class="stat-label">Badges Found</div>
             </div>
         </div>
 
-        <div class="collection">
-            <div class="section-title">🏆 Badge Collection</div>
-            <div class="progress-text" id="collectionProgress">0 / 0</div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+        <div class="section">
+            <div class="section-header">Badge Collection</div>
+            <div style="margin-bottom: 20px;">
+                <div class="badge-count-label" id="collectionProgress">0 / 0</div>
+                <div style="background: #1a1a1a; height: 8px; border-radius: 2px; overflow: hidden; border: 1px solid #333;">
+                    <div style="background: #666; height: 100%; width: 0%; transition: width 0.3s ease;" id="progressBar"></div>
+                </div>
             </div>
             <div class="badge-grid" id="badgeCollection"></div>
         </div>
 
-        <div class="history">
-            <div class="section-title">📜 Recent Rolls</div>
+        <div class="section">
+            <div class="section-header">Recent Rolls</div>
             <div class="history-list" id="historyList">No rolls yet</div>
-            <button class="clear-btn" onclick="clearHistory()">Clear All</button>
+            <button class="clear-btn" onclick="clearHistory()">Clear History</button>
         </div>
     </div>
 
@@ -1028,19 +985,68 @@
 
         function displayRoll(number, badgeIds, ep) {
             const resultSection = document.getElementById('resultSection');
-            document.getElementById('numberValue').textContent = number.toLocaleString();
-            document.getElementById('rarityDisplay').textContent = getRarity(ep);
-
-            const badgesHTML = badgeIds.length > 0 
-                ? badgeIds.map(id => `
-                    <div class="badge-earned rarity-${BADGES[id].rarity}">
-                        <div style="font-size: 1.6em;">${BADGES[id].emoji}</div>
-                        <div class="badge-tooltip">${BADGES[id].description}</div>
-                    </div>
-                `).join('')
-                : '<div style="color: var(--text-dim); font-size: 0.9em;">No badges this roll</div>';
+            const rarity = getRarity(ep);
+            const numberStr = number.toString();
             
-            document.getElementById('earnedBadges').innerHTML = badgesHTML;
+            // Update number box with rarity color
+            const numberBox = document.getElementById('numberBox');
+            const rarityClass = rarity.toLowerCase();
+            numberBox.className = `number-box ${rarityClass}`;
+            document.getElementById('numberValue').textContent = number.toLocaleString();
+            
+            // Update rarity tags
+            document.getElementById('rarityTag').className = `rarity-tag ${rarityClass}`;
+            document.getElementById('rarityTag').textContent = rarity.toUpperCase();
+            
+            // Calculate percentile
+            const percentile = Math.round((ep / 1000) * 100);
+            document.getElementById('percentileTag').textContent = `TOP ${Math.max(1, percentile)}%`;
+            
+            // Update EP
+            document.getElementById('epDisplay').innerHTML = `${ep.toLocaleString()} EP<br><span style="font-size: 0.8em; color: var(--text-muted);">${ep.toLocaleString()} LIFETIME EP</span>`;
+            
+            // Display badge breakdown
+            const badgeBreakdown = document.getElementById('badgeBreakdown');
+            if (badgeIds.length > 0) {
+                document.getElementById('badgeCountLabel').textContent = `${badgeIds.length} BADGE${badgeIds.length !== 1 ? 'S' : ''} EARNED`;
+                
+                const badgesHTML = badgeIds.map(id => {
+                    const badge = BADGES[id];
+                    const rarityValues = { 'common': 10, 'uncommon': 25, 'rare': 50, 'epic': 100, 'anomaly': 250, 'mythic': 500 };
+                    const badgeEP = rarityValues[badge.rarity];
+                    
+                    // Show which digits are in the number
+                    const numberDigits = new Set(numberStr);
+                    const digitBoxes = Array.from({ length: 10 }, (_, i) => {
+                        if (numberDigits.has(i.toString())) {
+                            return `<div class="digit-box ${badge.rarity}">${i}</div>`;
+                        }
+                        return `<div class="digit-box none">—</div>`;
+                    }).join('');
+                    
+                    return `
+                        <div class="badge-item ${badge.rarity}">
+                            <div class="badge-header">
+                                <div class="badge-emoji">${badge.emoji}</div>
+                                <div class="badge-name-rarity">
+                                    <div class="badge-name">${badge.name}</div>
+                                    <div class="badge-rarity">${badge.rarity.toUpperCase()}</div>
+                                </div>
+                                <div class="badge-ep">+${badgeEP.toLocaleString()} EP</div>
+                            </div>
+                            <div class="badge-description">${badge.description}</div>
+                            <div class="badge-digits">${digitBoxes}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                document.getElementById('earnedBadges').innerHTML = badgesHTML;
+                badgeBreakdown.style.display = 'block';
+            } else {
+                document.getElementById('badgeCountLabel').textContent = '0 BADGES EARNED';
+                badgeBreakdown.style.display = 'none';
+            }
+            
             resultSection.style.display = 'block';
 
             setTimeout(() => {
@@ -1073,10 +1079,10 @@
                 const count = gameData.badgeCollection[id];
                 const locked = count === 0;
                 return `
-                    <div class="badge-card rarity-${badge.rarity} ${locked ? 'locked' : ''}">
-                        <div class="badge-emoji">${badge.emoji}</div>
-                        <div class="badge-name">${badge.name}</div>
-                        <div class="badge-count">${count > 0 ? `×${count}` : '🔒'}</div>
+                    <div class="badge-card ${locked ? 'locked' : ''}">
+                        <div class="badge-card-emoji">${badge.emoji}</div>
+                        <div class="badge-card-name">${badge.name}</div>
+                        <div class="badge-card-count">${count > 0 ? `×${count}` : 'LOCKED'}</div>
                     </div>
                 `;
             }).join('');
@@ -1085,19 +1091,22 @@
         function renderHistory() {
             const container = document.getElementById('historyList');
             if (gameData.rolls.length === 0) {
-                container.innerHTML = '<div style="text-align: center; color: var(--text-dim); padding: 30px;">No rolls yet</div>';
+                container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 0.9em;">No rolls yet</div>';
                 return;
             }
 
-            container.innerHTML = gameData.rolls.map((roll) => `
-                <div class="history-item">
-                    <div style="flex: 1;">
-                        <div class="history-number">${roll.number.toLocaleString()}</div>
-                        <div class="history-meta">${roll.timestamp} • ${roll.badges.length} ${roll.badges.length === 1 ? 'badge' : 'badges'}</div>
+            container.innerHTML = gameData.rolls.slice(0, 20).map((roll) => {
+                const timeStr = roll.timestamp;
+                return `
+                    <div class="history-item">
+                        <div>
+                            <div class="history-number">${roll.number.toLocaleString()}</div>
+                            <div class="history-time">${timeStr} • ${roll.badges.length} badge${roll.badges.length !== 1 ? 's' : ''}</div>
+                        </div>
+                        <div style="color: var(--anomaly); font-weight: 700;">+${roll.ep} EP</div>
                     </div>
-                    <div class="history-ep">+${roll.ep}</div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function clearHistory() {
