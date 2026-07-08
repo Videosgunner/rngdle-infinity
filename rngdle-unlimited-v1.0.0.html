@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RNGdle Unlimited - Roll infinite random numbers and collect badges!">
+    <title>RNGdle Unlimited</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --text-muted: #808080;
+            --border: #333333;
+            --common: #2d5016;
+            --uncommon: #0f4c75;
+            --rare: #5a189a;
+            --epic: #d4a574;
+            --anomaly: #931e18;
+            --mythic: #d4af37;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 40px 0 30px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1em;
+            font-weight: 400;
+        }
+
+        .main-section {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .number-prompt {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            margin-bottom: 30px;
+        }
+
+        .number-box {
+            display: inline-block;
+            border: 3px solid var(--border);
+            border-radius: 12px;
+            padding: 30px 50px;
+            font-size: 4em;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            margin: 30px 0;
+            min-width: 300px;
+            letter-spacing: 3px;
+            animation: numberAppear 0.5s ease-out;
+        }
+
+        .number-box.common { border-color: var(--common); color: var(--common); }
+        .number-box.uncommon { border-color: var(--uncommon); color: var(--uncommon); }
+        .number-box.rare { border-color: var(--rare); color: var(--rare); }
+        .number-box.epic { border-color: var(--epic); color: var(--epic); }
+        .number-box.anomaly { border-color: var(--anomaly); color: var(--anomaly); }
+        .number-box.mythic { border-color: var(--mythic); color: var(--mythic); }
+
+        @keyframes numberAppear {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .roll-button {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 16px 40px;
+            background: #000000;
+            color: var(--text);
+            border: 1px solid var(--border);
+            font-size: 1.1em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .roll-button:hover:not(:disabled) {
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
+        }
+
+        .roll-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .rarity-info {
+            margin: 30px 0;
+            font-size: 0.95em;
+        }
+
+        .rarity-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin: 0 5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .rarity-tag.common { border-color: var(--common); color: var(--common); }
+        .rarity-tag.uncommon { border-color: var(--uncommon); color: var(--uncommon); }
+        .rarity-tag.rare { border-color: var(--rare); color: var(--rare); }
+        .rarity-tag.epic { border-color: var(--epic); color: var(--epic); }
+        .rarity-tag.anomaly { border-color: var(--anomaly); color: var(--anomaly); }
+        .rarity-tag.mythic { border-color: var(--mythic); color: var(--mythic); }
+
+        .ep-display {
+            color: var(--anomaly);
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-top: 15px;
+            letter-spacing: 1px;
+        }
+
+        .badge-breakdown {
+            margin-top: 50px;
+            text-align: left;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .breakdown-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .badge-count-label {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .badge-item {
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--border);
+            border-radius: 4px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .badge-item:hover {
+            background: #222222;
+            border-left-color: var(--text);
+        }
+
+        .badge-item.common { border-left-color: var(--common); }
+        .badge-item.uncommon { border-left-color: var(--uncommon); }
+        .badge-item.rare { border-left-color: var(--rare); }
+        .badge-item.epic { border-left-color: var(--epic); }
+        .badge-item.anomaly { border-left-color: var(--anomaly); }
+        .badge-item.mythic { border-left-color: var(--mythic); }
+
+        .badge-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .badge-emoji {
+            font-size: 1.5em;
+        }
+
+        .badge-name-rarity {
+            flex: 1;
+        }
+
+        .badge-name {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-rarity {
+            font-size: 0.75em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-ep {
+            font-weight: 700;
+            color: var(--anomaly);
+            font-size: 0.9em;
+            margin-left: auto;
+        }
+
+        .badge-description {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .badge-digits {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .digit-box {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--uncommon);
+            color: var(--bg);
+            font-weight: 700;
+            font-size: 0.85em;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .digit-box.none { background: #333333; color: var(--text-muted); }
+        .digit-box.common { background: var(--common); }
+        .digit-box.uncommon { background: var(--uncommon); }
+        .digit-box.rare { background: var(--rare); }
+        .digit-box.epic { background: var(--epic); }
+        .digit-box.anomaly { background: var(--anomaly); }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 60px 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat-box {
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            background: #222222;
+            border-color: var(--text);
+        }
+
+        .stat-number {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .stat-label {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .section {
+            margin: 60px 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-header {
+            font-size: 1.1em;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+        }
+
+        .badge-card {
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .badge-card:hover:not(.locked) {
+            background: #222222;
+            border-color: var(--text);
+            transform: translateY(-3px);
+        }
+
+        .badge-card.locked {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        .badge-card-emoji {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+
+        .badge-card-name {
+            font-weight: 600;
+            font-size: 0.85em;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-card-count {
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .history-item {
+            background: #1a1a1a;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            background: #222222;
+            border-color: var(--text);
+        }
+
+        .history-number {
+            font-size: 1.3em;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+        }
+
+        .history-time {
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+
+        .clear-btn {
+            background: #000000;
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 12px 24px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+
+        .clear-btn:hover {
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8em; }
+            .number-box { font-size: 2.5em; padding: 20px 30px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .badge-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RNGdle Unlimited</h1>
+            <p class="subtitle">Infinite rolls. Unlimited badges. No daily limits.</p>
+        </header>
+
+        <div class="main-section">
+            <p class="number-prompt">What number will you roll?</p>
+            
+            <button class="roll-button" onclick="rollNumber()">Generate</button>
+
+            <div id="resultSection" style="display: none;">
+                <div class="number-box" id="numberBox">
+                    <span id="numberValue">0</span>
+                </div>
+
+                <div class="rarity-info">
+                    <span class="rarity-tag" id="rarityTag">—</span>
+                    <span class="rarity-tag" id="percentileTag">—</span>
+                </div>
+
+                <div class="ep-display" id="epDisplay">0 EP</div>
+
+                <div class="badge-breakdown" id="badgeBreakdown" style="display: none;">
+                    <div class="breakdown-title">Badge Breakdown</div>
+                    <div class="badge-count-label" id="badgeCountLabel">0 badges earned</div>
+                    <div id="earnedBadges"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number" id="totalRolls">0</div>
+                <div class="stat-label">Total Rolls</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="totalEP">0</div>
+                <div class="stat-label">Lifetime EP</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="uniqueBadges">0</div>
+                <div class="stat-label">Badges Found</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">Badge Collection</div>
+            <div style="margin-bottom: 20px;">
+                <div class="badge-count-label" id="collectionProgress">0 / 0</div>
+                <div style="background: #1a1a1a; height: 8px; border-radius: 2px; overflow: hidden; border: 1px solid #333;">
+                    <div style="background: #666; height: 100%; width: 0%; transition: width 0.3s ease;" id="progressBar"></div>
+                </div>
+            </div>
+            <div class="badge-grid" id="badgeCollection"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">Recent Rolls</div>
+            <div class="history-list" id="historyList">No rolls yet</div>
+            <button class="clear-btn" onclick="clearHistory()">Clear History</button>
+        </div>
+    </div>
+
+    <script>
+        // Badge definitions (30+ badges)
+        const BADGES = {
+            prime: {
+                name: "Prime Time",
+                emoji: "🔢",
+                rarity: "uncommon",
+                description: "A prime number",
+                check: (n) => isPrime(n)
+            },
+            palindrome: {
+                name: "Palindrome",
+                emoji: "🔄",
+                rarity: "uncommon",
+                description: "Reads same backwards",
+                check: (n) => isPalindrome(n)
+            },
+            perfect_square: {
+                name: "Perfect Square",
+                emoji: "📦",
+                rarity: "rare",
+                description: "A perfect square",
+                check: (n) => isPerfectSquare(n)
+            },
+            perfect_cube: {
+                name: "Perfect Cube",
+                emoji: "🎲",
+                rarity: "rare",
+                description: "A perfect cube",
+                check: (n) => isPerfectCube(n)
+            },
+            fibonacci: {
+                name: "Fibonacci",
+                emoji: "🌀",
+                rarity: "epic",
+                description: "Fibonacci sequence",
+                check: (n) => isFibonacci(n)
+            },
+            power_of_two: {
+                name: "Power of Two",
+                emoji: "⚡",
+                rarity: "rare",
+                description: "A power of 2",
+                check: (n) => isPowerOfTwo(n)
+            },
+            repeating_digits: {
+                name: "Repeating",
+                emoji: "🔁",
+                rarity: "uncommon",
+                description: "Has repeating digits",
+                check: (n) => hasRepeatingDigits(n)
+            },
+            all_same_digit: {
+                name: "All Same",
+                emoji: "🌟",
+                rarity: "epic",
+                description: "All digits identical",
+                check: (n) => allSameDigits(n)
+            },
+            meme_number: {
+                name: "Meme Number",
+                emoji: "😂",
+                rarity: "rare",
+                description: "Famous meme number",
+                check: (n) => isMemeNumber(n)
+            },
+            lucky_seven: {
+                name: "Lucky 7",
+                emoji: "🍀",
+                rarity: "uncommon",
+                description: "Has 7 in it",
+                check: (n) => n.toString().includes('7') || n % 7 === 0
+            },
+            lucky_eight: {
+                name: "Lucky 8",
+                emoji: "∞",
+                rarity: "uncommon",
+                description: "Has 8 in it",
+                check: (n) => n.toString().includes('8') || n % 8 === 0
+            },
+            ascending_digits: {
+                name: "Ascending",
+                emoji: "📈",
+                rarity: "epic",
+                description: "Digits go up",
+                check: (n) => isAscendingDigits(n)
+            },
+            descending_digits: {
+                name: "Descending",
+                emoji: "📉",
+                rarity: "epic",
+                description: "Digits go down",
+                check: (n) => isDescendingDigits(n)
+            },
+            contains_zero: {
+                name: "Zero Hero",
+                emoji: "0️⃣",
+                rarity: "uncommon",
+                description: "Contains 0",
+                check: (n) => n.toString().includes('0')
+            },
+            all_odd: {
+                name: "Odd Squad",
+                emoji: "🤪",
+                rarity: "rare",
+                description: "All odd digits",
+                check: (n) => allOddDigits(n)
+            },
+            all_even: {
+                name: "Even Steven",
+                emoji: "🎯",
+                rarity: "rare",
+                description: "All even digits",
+                check: (n) => allEvenDigits(n)
+            },
+            triangular: {
+                name: "Triangular",
+                emoji: "△",
+                rarity: "epic",
+                description: "Triangular number",
+                check: (n) => isTriangular(n)
+            },
+            perfect_number: {
+                name: "Perfect",
+                emoji: "✨",
+                rarity: "mythic",
+                description: "Perfect number",
+                check: (n) => isPerfectNumber(n)
+            },
+            round_number: {
+                name: "Round",
+                emoji: "⭕",
+                rarity: "common",
+                description: "Ends in zeros",
+                check: (n) => n > 0 && n % 100 === 0
+            },
+            one_million: {
+                name: "Jackpot",
+                emoji: "💰",
+                rarity: "mythic",
+                description: "1,000,000!",
+                check: (n) => n === 1000000
+            },
+            armstrong: {
+                name: "Armstrong",
+                emoji: "💎",
+                rarity: "epic",
+                description: "Sum of digit powers",
+                check: (n) => isArmstrong(n)
+            },
+            harshad: {
+                name: "Harshad",
+                emoji: "➗",
+                rarity: "uncommon",
+                description: "Divisible by digit sum",
+                check: (n) => isHarshad(n)
+            },
+            happy_number: {
+                name: "Happy",
+                emoji: "😊",
+                rarity: "rare",
+                description: "Happy number",
+                check: (n) => isHappy(n)
+            },
+            power_of_three: {
+                name: "Triple Power",
+                emoji: "3️⃣",
+                rarity: "rare",
+                description: "Power of 3",
+                check: (n) => isPowerOfThree(n)
+            },
+            power_of_five: {
+                name: "Five Squared",
+                emoji: "5️⃣",
+                rarity: "rare",
+                description: "Power of 5",
+                check: (n) => isPowerOfFive(n)
+            },
+            sum_to_ten: {
+                name: "Sum to 10",
+                emoji: "➕",
+                rarity: "uncommon",
+                description: "Digits sum to 10",
+                check: (n) => digitSum(n) === 10
+            },
+            digital_root_nine: {
+                name: "Digit 9",
+                emoji: "9️⃣",
+                rarity: "rare",
+                description: "Digital root is 9",
+                check: (n) => digitalRoot(n) === 9
+            },
+            double_digit: {
+                name: "Double",
+                emoji: "2️⃣",
+                rarity: "uncommon",
+                description: "Exactly 2 digits",
+                check: (n) => n >= 10 && n < 100
+            },
+            triple_digit: {
+                name: "Triple",
+                emoji: "3️⃣",
+                rarity: "uncommon",
+                description: "Exactly 3 digits",
+                check: (n) => n >= 100 && n < 1000
+            },
+            five_digit: {
+                name: "Five Figures",
+                emoji: "🔢",
+                rarity: "rare",
+                description: "Exactly 5 digits",
+                check: (n) => n >= 10000 && n < 100000
+            },
+            catalan: {
+                name: "Catalan",
+                emoji: "🎪",
+                rarity: "epic",
+                description: "Catalan number",
+                check: (n) => isCatalan(n)
+            },
+            kaprekar: {
+                name: "Kaprekar",
+                emoji: "🎭",
+                rarity: "epic",
+                description: "Kaprekar number",
+                check: (n) => isKaprekar(n)
+            },
+            narcissistic: {
+                name: "Narcissistic",
+                emoji: "🪞",
+                rarity: "epic",
+                description: "Sum of power of digits",
+                check: (n) => isNarcissistic(n)
+            }
+        };
+
+        // Math functions
+        function isPrime(n) {
+            if (n < 2) return false;
+            if (n === 2) return true;
+            if (n % 2 === 0) return false;
+            for (let i = 3; i <= Math.sqrt(n); i += 2) {
+                if (n % i === 0) return false;
+            }
+            return true;
+        }
+
+        function isPalindrome(n) {
+            const str = n.toString();
+            return str === str.split('').reverse().join('');
+        }
+
+        function isPerfectSquare(n) {
+            const root = Math.sqrt(n);
+            return root === Math.floor(root) && n > 1;
+        }
+
+        function isPerfectCube(n) {
+            const root = Math.cbrt(n);
+            return root === Math.floor(root) && n > 1;
+        }
+
+        function isFibonacci(n) {
+            let a = 0, b = 1;
+            while (a < n) {
+                [a, b] = [b, a + b];
+            }
+            return a === n;
+        }
+
+        function isPowerOfTwo(n) {
+            return n > 0 && (n & (n - 1)) === 0;
+        }
+
+        function isPowerOfThree(n) {
+            if (n < 1) return false;
+            while (n % 3 === 0) n /= 3;
+            return n === 1;
+        }
+
+        function isPowerOfFive(n) {
+            if (n < 1) return false;
+            while (n % 5 === 0) n /= 5;
+            return n === 1;
+        }
+
+        function hasRepeatingDigits(n) {
+            const digits = n.toString();
+            return new Set(digits).size < digits.length;
+        }
+
+        function allSameDigits(n) {
+            const digits = n.toString();
+            return digits.length > 1 && new Set(digits).size === 1;
+        }
+
+        function allOddDigits(n) {
+            const digits = n.toString().split('');
+            return digits.length > 1 && digits.every(d => parseInt(d) % 2 === 1);
+        }
+
+        function allEvenDigits(n) {
+            const digits = n.toString().split('');
+            return digits.length > 1 && digits.every(d => parseInt(d) % 2 === 0);
+        }
+
+        function isMemeNumber(n) {
+            const memes = [42, 69, 420, 666, 777, 888, 999, 1337, 4200, 6969, 80085];
+            return memes.includes(n);
+        }
+
+        function isAscendingDigits(n) {
+            const digits = n.toString().split('').map(Number);
+            if (digits.length < 2) return false;
+            for (let i = 1; i < digits.length; i++) {
+                if (digits[i] <= digits[i - 1]) return false;
+            }
+            return true;
+        }
+
+        function isDescendingDigits(n) {
+            const digits = n.toString().split('').map(Number);
+            if (digits.length < 2) return false;
+            for (let i = 1; i < digits.length; i++) {
+                if (digits[i] >= digits[i - 1]) return false;
+            }
+            return true;
+        }
+
+        function isTriangular(n) {
+            const x = (Math.sqrt(1 + 8 * n) - 1) / 2;
+            return x === Math.floor(x) && n > 0;
+        }
+
+        function isPerfectNumber(n) {
+            const perfectNumbers = [6, 28, 496, 8128];
+            return perfectNumbers.includes(n);
+        }
+
+        function digitSum(n) {
+            return n.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+        }
+
+        function digitalRoot(n) {
+            while (n >= 10) {
+                n = digitSum(n);
+            }
+            return n;
+        }
+
+        function isArmstrong(n) {
+            const digits = n.toString().split('').map(Number);
+            const sum = digits.reduce((acc, d) => acc + Math.pow(d, digits.length), 0);
+            return sum === n;
+        }
+
+        function isHarshad(n) {
+            return n % digitSum(n) === 0;
+        }
+
+        function isHappy(n) {
+            const seen = new Set();
+            while (n !== 1 && !seen.has(n)) {
+                seen.add(n);
+                n = n.toString().split('').reduce((acc, d) => acc + parseInt(d) ** 2, 0);
+            }
+            return n === 1;
+        }
+
+        function isCatalan(n) {
+            const catalan = [1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, 208012, 742900];
+            return catalan.includes(n);
+        }
+
+        function isKaprekar(n) {
+            if (n === 1) return true;
+            const squared = (n * n).toString();
+            const len = n.toString().length;
+            const left = parseInt(squared.slice(0, -len) || '0');
+            const right = parseInt(squared.slice(-len));
+            return left + right === n;
+        }
+
+        function isNarcissistic(n) {
+            const digits = n.toString().split('').map(Number);
+            const sum = digits.reduce((acc, d) => acc + Math.pow(d, digits.length), 0);
+            return sum === n;
+        }
+
+        // Game logic
+        let gameData = {
+            rolls: [],
+            badgeCollection: {},
+            totalEP: 0
+        };
+
+        function loadGameData() {
+            const saved = localStorage.getItem('rngdleData');
+            if (saved) {
+                gameData = JSON.parse(saved);
+            }
+            initializeBadgeCollection();
+            updateUI();
+        }
+
+        function initializeBadgeCollection() {
+            Object.keys(BADGES).forEach(badgeId => {
+                if (!gameData.badgeCollection[badgeId]) {
+                    gameData.badgeCollection[badgeId] = 0;
+                }
+            });
+        }
+
+        function saveGameData() {
+            localStorage.setItem('rngdleData', JSON.stringify(gameData));
+        }
+
+        function rollNumber() {
+            const button = document.querySelector('.roll-button');
+            button.disabled = true;
+
+            setTimeout(() => {
+                const number = Math.floor(Math.random() * 1000001);
+                analyzeNumber(number);
+                button.disabled = false;
+            }, 300);
+        }
+
+        function analyzeNumber(number) {
+            const earnedBadgeIds = [];
+            Object.entries(BADGES).forEach(([id, badge]) => {
+                if (badge.check(number)) {
+                    earnedBadgeIds.push(id);
+                }
+            });
+
+            let ep = calculateEP(earnedBadgeIds);
+
+            gameData.rolls.unshift({
+                number: number,
+                timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+                badges: earnedBadgeIds,
+                ep: ep,
+                rarity: getRarity(ep)
+            });
+
+            if (gameData.rolls.length > 50) {
+                gameData.rolls = gameData.rolls.slice(0, 50);
+            }
+
+            earnedBadgeIds.forEach(badgeId => {
+                gameData.badgeCollection[badgeId]++;
+            });
+
+            gameData.totalEP += ep;
+            saveGameData();
+            displayRoll(number, earnedBadgeIds, ep);
+            updateUI();
+        }
+
+        function calculateEP(badgeIds) {
+            let ep = 0;
+            const rarityValues = {
+                'common': 10,
+                'uncommon': 25,
+                'rare': 50,
+                'epic': 100,
+                'anomaly': 250,
+                'mythic': 500
+            };
+            badgeIds.forEach(badgeId => {
+                ep += rarityValues[BADGES[badgeId].rarity];
+            });
+            return ep;
+        }
+
+        function getRarity(ep) {
+            if (ep >= 500) return 'Mythic';
+            if (ep >= 250) return 'Anomaly';
+            if (ep >= 100) return 'Epic';
+            if (ep >= 50) return 'Rare';
+            if (ep >= 25) return 'Uncommon';
+            if (ep >= 10) return 'Common';
+            return 'Trash';
+        }
+
+        function displayRoll(number, badgeIds, ep) {
+            const resultSection = document.getElementById('resultSection');
+            const rarity = getRarity(ep);
+            const numberStr = number.toString();
+            
+            // Update number box with rarity color
+            const numberBox = document.getElementById('numberBox');
+            const rarityClass = rarity.toLowerCase();
+            numberBox.className = `number-box ${rarityClass}`;
+            document.getElementById('numberValue').textContent = number.toLocaleString();
+            
+            // Update rarity tags
+            document.getElementById('rarityTag').className = `rarity-tag ${rarityClass}`;
+            document.getElementById('rarityTag').textContent = rarity.toUpperCase();
+            
+            // Calculate percentile
+            const percentile = Math.round((ep / 1000) * 100);
+            document.getElementById('percentileTag').textContent = `TOP ${Math.max(1, percentile)}%`;
+            
+            // Update EP
+            document.getElementById('epDisplay').innerHTML = `${ep.toLocaleString()} EP<br><span style="font-size: 0.8em; color: var(--text-muted);">${ep.toLocaleString()} LIFETIME EP</span>`;
+            
+            // Display badge breakdown
+            const badgeBreakdown = document.getElementById('badgeBreakdown');
+            if (badgeIds.length > 0) {
+                document.getElementById('badgeCountLabel').textContent = `${badgeIds.length} BADGE${badgeIds.length !== 1 ? 'S' : ''} EARNED`;
+                
+                const badgesHTML = badgeIds.map(id => {
+                    const badge = BADGES[id];
+                    const rarityValues = { 'common': 10, 'uncommon': 25, 'rare': 50, 'epic': 100, 'anomaly': 250, 'mythic': 500 };
+                    const badgeEP = rarityValues[badge.rarity];
+                    
+                    // Show which digits are in the number
+                    const numberDigits = new Set(numberStr);
+                    const digitBoxes = Array.from({ length: 10 }, (_, i) => {
+                        if (numberDigits.has(i.toString())) {
+                            return `<div class="digit-box ${badge.rarity}">${i}</div>`;
+                        }
+                        return `<div class="digit-box none">—</div>`;
+                    }).join('');
+                    
+                    return `
+                        <div class="badge-item ${badge.rarity}">
+                            <div class="badge-header">
+                                <div class="badge-emoji">${badge.emoji}</div>
+                                <div class="badge-name-rarity">
+                                    <div class="badge-name">${badge.name}</div>
+                                    <div class="badge-rarity">${badge.rarity.toUpperCase()}</div>
+                                </div>
+                                <div class="badge-ep">+${badgeEP.toLocaleString()} EP</div>
+                            </div>
+                            <div class="badge-description">${badge.description}</div>
+                            <div class="badge-digits">${digitBoxes}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                document.getElementById('earnedBadges').innerHTML = badgesHTML;
+                badgeBreakdown.style.display = 'block';
+            } else {
+                document.getElementById('badgeCountLabel').textContent = '0 BADGES EARNED';
+                badgeBreakdown.style.display = 'none';
+            }
+            
+            resultSection.style.display = 'block';
+
+            setTimeout(() => {
+                resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+
+        function updateUI() {
+            document.getElementById('totalRolls').textContent = gameData.rolls.length;
+            document.getElementById('totalEP').textContent = gameData.totalEP.toLocaleString();
+
+            let uniqueBadges = 0;
+            Object.values(gameData.badgeCollection).forEach(count => {
+                if (count > 0) uniqueBadges++;
+            });
+
+            document.getElementById('uniqueBadges').textContent = uniqueBadges;
+
+            const progress = (uniqueBadges / Object.keys(BADGES).length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('collectionProgress').textContent = `${uniqueBadges} / ${Object.keys(BADGES).length}`;
+
+            renderBadgeCollection();
+            renderHistory();
+        }
+
+        function renderBadgeCollection() {
+            const container = document.getElementById('badgeCollection');
+            container.innerHTML = Object.entries(BADGES).map(([id, badge]) => {
+                const count = gameData.badgeCollection[id];
+                const locked = count === 0;
+                return `
+                    <div class="badge-card ${locked ? 'locked' : ''}">
+                        <div class="badge-card-emoji">${badge.emoji}</div>
+                        <div class="badge-card-name">${badge.name}</div>
+                        <div class="badge-card-count">${count > 0 ? `×${count}` : 'LOCKED'}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('historyList');
+            if (gameData.rolls.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 0.9em;">No rolls yet</div>';
+                return;
+            }
+
+            container.innerHTML = gameData.rolls.slice(0, 20).map((roll) => {
+                const timeStr = roll.timestamp;
+                return `
+                    <div class="history-item">
+                        <div>
+                            <div class="history-number">${roll.number.toLocaleString()}</div>
+                            <div class="history-time">${timeStr} • ${roll.badges.length} badge${roll.badges.length !== 1 ? 's' : ''}</div>
+                        </div>
+                        <div style="color: var(--anomaly); font-weight: 700;">+${roll.ep} EP</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function clearHistory() {
+            if (confirm('Clear all data? This cannot be undone.')) {
+                gameData = { rolls: [], badgeCollection: {}, totalEP: 0 };
+                initializeBadgeCollection();
+                saveGameData();
+                updateUI();
+                document.getElementById('resultSection').style.display = 'none';
+            }
+        }
+
+        loadGameData();
+    </script>
+</body>
+</html>
