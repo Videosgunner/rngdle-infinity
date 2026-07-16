@@ -1,11 +1,12 @@
 {
   "buildCommand": "",
   "outputDirectory": ".",
-  "cleanUrls": true,
-  "rewrites": [
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "routes": [
     {
-      "source": "/",
-      "destination": "/rngdle-unlimited.html"
+      "src": "/(.*)",
+      "dest": "/rngdle-unlimited.html"
     }
   ]
 }
