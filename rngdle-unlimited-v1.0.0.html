@@ -507,13 +507,6 @@
                 description: "A prime number",
                 check: (n) => isPrime(n)
             },
-            palindrome: {
-                name: "Palindrome",
-                emoji: "🔄",
-                rarity: "uncommon",
-                description: "Reads same backwards",
-                check: (n) => isPalindrome(n)
-            },
             perfect_square: {
                 name: "Perfect Square",
                 emoji: "📦",
@@ -541,76 +534,6 @@
                 rarity: "rare",
                 description: "A power of 2",
                 check: (n) => isPowerOfTwo(n)
-            },
-            repeating_digits: {
-                name: "Repeating",
-                emoji: "🔁",
-                rarity: "uncommon",
-                description: "Has repeating digits",
-                check: (n) => hasRepeatingDigits(n)
-            },
-            all_same_digit: {
-                name: "All Same",
-                emoji: "🌟",
-                rarity: "epic",
-                description: "All digits identical",
-                check: (n) => allSameDigits(n)
-            },
-            meme_number: {
-                name: "Meme Number",
-                emoji: "😂",
-                rarity: "rare",
-                description: "Famous meme number",
-                check: (n) => isMemeNumber(n)
-            },
-            lucky_seven: {
-                name: "Lucky 7",
-                emoji: "🍀",
-                rarity: "uncommon",
-                description: "Has 7 in it",
-                check: (n) => n.toString().includes('7') || n % 7 === 0
-            },
-            lucky_eight: {
-                name: "Lucky 8",
-                emoji: "∞",
-                rarity: "uncommon",
-                description: "Has 8 in it",
-                check: (n) => n.toString().includes('8') || n % 8 === 0
-            },
-            ascending_digits: {
-                name: "Ascending",
-                emoji: "📈",
-                rarity: "epic",
-                description: "Digits go up",
-                check: (n) => isAscendingDigits(n)
-            },
-            descending_digits: {
-                name: "Descending",
-                emoji: "📉",
-                rarity: "epic",
-                description: "Digits go down",
-                check: (n) => isDescendingDigits(n)
-            },
-            contains_zero: {
-                name: "Zero Hero",
-                emoji: "0️⃣",
-                rarity: "uncommon",
-                description: "Contains 0",
-                check: (n) => n.toString().includes('0')
-            },
-            all_odd: {
-                name: "Odd Squad",
-                emoji: "🤪",
-                rarity: "rare",
-                description: "All odd digits",
-                check: (n) => allOddDigits(n)
-            },
-            all_even: {
-                name: "Even Steven",
-                emoji: "🎯",
-                rarity: "rare",
-                description: "All even digits",
-                check: (n) => allEvenDigits(n)
             },
             triangular: {
                 name: "Triangular",
@@ -640,27 +563,6 @@
                 description: "1,000,000!",
                 check: (n) => n === 1000000
             },
-            armstrong: {
-                name: "Armstrong",
-                emoji: "💎",
-                rarity: "epic",
-                description: "Sum of digit powers",
-                check: (n) => isArmstrong(n)
-            },
-            harshad: {
-                name: "Harshad",
-                emoji: "➗",
-                rarity: "uncommon",
-                description: "Divisible by digit sum",
-                check: (n) => isHarshad(n)
-            },
-            happy_number: {
-                name: "Happy",
-                emoji: "😊",
-                rarity: "rare",
-                description: "Happy number",
-                check: (n) => isHappy(n)
-            },
             power_of_three: {
                 name: "Triple Power",
                 emoji: "3️⃣",
@@ -675,41 +577,6 @@
                 description: "Power of 5",
                 check: (n) => isPowerOfFive(n)
             },
-            sum_to_ten: {
-                name: "Sum to 10",
-                emoji: "➕",
-                rarity: "uncommon",
-                description: "Digits sum to 10",
-                check: (n) => digitSum(n) === 10
-            },
-            digital_root_nine: {
-                name: "Digit 9",
-                emoji: "9️⃣",
-                rarity: "rare",
-                description: "Digital root is 9",
-                check: (n) => digitalRoot(n) === 9
-            },
-            double_digit: {
-                name: "Double",
-                emoji: "2️⃣",
-                rarity: "uncommon",
-                description: "Exactly 2 digits",
-                check: (n) => n >= 10 && n < 100
-            },
-            triple_digit: {
-                name: "Triple",
-                emoji: "3️⃣",
-                rarity: "uncommon",
-                description: "Exactly 3 digits",
-                check: (n) => n >= 100 && n < 1000
-            },
-            five_digit: {
-                name: "Five Figures",
-                emoji: "🔢",
-                rarity: "rare",
-                description: "Exactly 5 digits",
-                check: (n) => n >= 10000 && n < 100000
-            },
             catalan: {
                 name: "Catalan",
                 emoji: "🎪",
@@ -717,20 +584,6 @@
                 description: "Catalan number",
                 check: (n) => isCatalan(n)
             },
-            kaprekar: {
-                name: "Kaprekar",
-                emoji: "🎭",
-                rarity: "epic",
-                description: "Kaprekar number",
-                check: (n) => isKaprekar(n)
-            },
-            narcissistic: {
-                name: "Narcissistic",
-                emoji: "🪞",
-                rarity: "epic",
-                description: "Sum of power of digits",
-                check: (n) => isNarcissistic(n)
-            }
         };
 
         // Math functions
@@ -742,11 +595,6 @@
                 if (n % i === 0) return false;
             }
             return true;
-        }
-
-        function isPalindrome(n) {
-            const str = n.toString();
-            return str === str.split('').reverse().join('');
         }
 
         function isPerfectSquare(n) {
@@ -783,107 +631,19 @@
             return n === 1;
         }
 
-        function hasRepeatingDigits(n) {
-            const digits = n.toString();
-            return new Set(digits).size < digits.length;
-        }
-
-        function allSameDigits(n) {
-            const digits = n.toString();
-            return digits.length > 1 && new Set(digits).size === 1;
-        }
-
-        function allOddDigits(n) {
-            const digits = n.toString().split('');
-            return digits.length > 1 && digits.every(d => parseInt(d) % 2 === 1);
-        }
-
-        function allEvenDigits(n) {
-            const digits = n.toString().split('');
-            return digits.length > 1 && digits.every(d => parseInt(d) % 2 === 0);
-        }
-
-        function isMemeNumber(n) {
-            const memes = [42, 69, 420, 666, 777, 888, 999, 1337, 4200, 6969, 80085];
-            return memes.includes(n);
-        }
-
-        function isAscendingDigits(n) {
-            const digits = n.toString().split('').map(Number);
-            if (digits.length < 2) return false;
-            for (let i = 1; i < digits.length; i++) {
-                if (digits[i] <= digits[i - 1]) return false;
-            }
-            return true;
-        }
-
-        function isDescendingDigits(n) {
-            const digits = n.toString().split('').map(Number);
-            if (digits.length < 2) return false;
-            for (let i = 1; i < digits.length; i++) {
-                if (digits[i] >= digits[i - 1]) return false;
-            }
-            return true;
-        }
-
         function isTriangular(n) {
             const x = (Math.sqrt(1 + 8 * n) - 1) / 2;
             return x === Math.floor(x) && n > 0;
         }
 
         function isPerfectNumber(n) {
-            const perfectNumbers = [6, 28, 496, 8128];
+            const perfectNumbers = [6, 28, 496, 8128, 33550336, 8589869056, 137438691328];
             return perfectNumbers.includes(n);
-        }
-
-        function digitSum(n) {
-            return n.toString().split('').reduce((a, b) => a + parseInt(b), 0);
-        }
-
-        function digitalRoot(n) {
-            while (n >= 10) {
-                n = digitSum(n);
-            }
-            return n;
-        }
-
-        function isArmstrong(n) {
-            const digits = n.toString().split('').map(Number);
-            const sum = digits.reduce((acc, d) => acc + Math.pow(d, digits.length), 0);
-            return sum === n;
-        }
-
-        function isHarshad(n) {
-            return n % digitSum(n) === 0;
-        }
-
-        function isHappy(n) {
-            const seen = new Set();
-            while (n !== 1 && !seen.has(n)) {
-                seen.add(n);
-                n = n.toString().split('').reduce((acc, d) => acc + parseInt(d) ** 2, 0);
-            }
-            return n === 1;
         }
 
         function isCatalan(n) {
             const catalan = [1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, 208012, 742900];
             return catalan.includes(n);
-        }
-
-        function isKaprekar(n) {
-            if (n === 1) return true;
-            const squared = (n * n).toString();
-            const len = n.toString().length;
-            const left = parseInt(squared.slice(0, -len) || '0');
-            const right = parseInt(squared.slice(-len));
-            return left + right === n;
-        }
-
-        function isNarcissistic(n) {
-            const digits = n.toString().split('').map(Number);
-            const sum = digits.reduce((acc, d) => acc + Math.pow(d, digits.length), 0);
-            return sum === n;
         }
 
         // Game logic
@@ -919,7 +679,7 @@
             button.disabled = true;
 
             setTimeout(() => {
-                const number = Math.floor(Math.random() * 1000001);
+                const number = Math.floor(1 / (Math.random() ** 2));
                 analyzeNumber(number);
                 button.disabled = false;
             }, 300);
