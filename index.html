@@ -474,43 +474,22 @@
     <script>
         const BADGES = {
             prime: { name: "Prime", emoji: "🔢", rarity: "uncommon", description: "Prime number", check: (n) => isPrime(n) },
-            palindrome: { name: "Palindrome", emoji: "🔄", rarity: "uncommon", description: "Reads same backwards", check: (n) => isPalindrome(n) },
             perfect_square: { name: "Perfect Square", emoji: "📦", rarity: "rare", description: "Perfect square", check: (n) => isPerfectSquare(n) },
             perfect_cube: { name: "Perfect Cube", emoji: "🎲", rarity: "rare", description: "Perfect cube", check: (n) => isPerfectCube(n) },
             fibonacci: { name: "Fibonacci", emoji: "🌀", rarity: "epic", description: "Fibonacci sequence", check: (n) => isFibonacci(n) },
             power_of_two: { name: "Power of 2", emoji: "⚡", rarity: "rare", description: "Power of 2", check: (n) => isPowerOfTwo(n) },
-            repeating_digits: { name: "Repeating", emoji: "🔁", rarity: "uncommon", description: "Has repeating digits", check: (n) => hasRepeatingDigits(n) },
-            all_same_digit: { name: "All Same", emoji: "🌟", rarity: "epic", description: "All digits identical", check: (n) => allSameDigits(n) },
             meme_number: { name: "Meme Number", emoji: "😂", rarity: "rare", description: "Famous meme number", check: (n) => isMemeNumber(n) },
-            lucky_seven: { name: "Lucky 7", emoji: "🍀", rarity: "uncommon", description: "Contains or divisible by 7", check: (n) => n.toString().includes('7') || n % 7 === 0 },
-            ascending_digits: { name: "Ascending", emoji: "📈", rarity: "epic", description: "Digits go up", check: (n) => isAscendingDigits(n) },
-            descending_digits: { name: "Descending", emoji: "📉", rarity: "epic", description: "Digits go down", check: (n) => isDescendingDigits(n) },
-            contains_zero: { name: "Zero Hero", emoji: "0️⃣", rarity: "uncommon", description: "Contains 0", check: (n) => n.toString().includes('0') },
-            all_odd: { name: "Odd Squad", emoji: "🤪", rarity: "rare", description: "All odd digits", check: (n) => allOddDigits(n) },
-            all_even: { name: "Even Steven", emoji: "🎯", rarity: "rare", description: "All even digits", check: (n) => allEvenDigits(n) },
             triangular: { name: "Triangular", emoji: "△", rarity: "epic", description: "Triangular number", check: (n) => isTriangular(n) },
             perfect_number: { name: "Perfect", emoji: "✨", rarity: "mythic", description: "Perfect number", check: (n) => isPerfectNumber(n) },
-            round_number: { name: "Round", emoji: "⭕", rarity: "common", description: "Ends in zeros", check: (n) => n > 0 && n % 100 === 0 },
-            armstrong: { name: "Armstrong", emoji: "💎", rarity: "epic", description: "Sum of digit powers", check: (n) => isArmstrong(n) },
-            harshad: { name: "Harshad", emoji: "➗", rarity: "uncommon", description: "Divisible by digit sum", check: (n) => isHarshad(n) },
-            happy_number: { name: "Happy", emoji: "😊", rarity: "rare", description: "Happy number", check: (n) => isHappy(n) },
             power_of_three: { name: "Power of 3", emoji: "3️⃣", rarity: "rare", description: "Power of 3", check: (n) => isPowerOfThree(n) },
             power_of_five: { name: "Power of 5", emoji: "5️⃣", rarity: "rare", description: "Power of 5", check: (n) => isPowerOfFive(n) },
-            digital_root_nine: { name: "Digital 9", emoji: "9️⃣", rarity: "rare", description: "Digital root is 9", check: (n) => digitalRoot(n) === 9 },
-            double_digit: { name: "Two Digits", emoji: "2️⃣", rarity: "uncommon", description: "Exactly 2 digits", check: (n) => n >= 10 && n < 100 },
-            triple_digit: { name: "Three Digits", emoji: "3️⃣", rarity: "uncommon", description: "Exactly 3 digits", check: (n) => n >= 100 && n < 1000 },
-            five_digit: { name: "Five Figures", emoji: "🔢", rarity: "rare", description: "Exactly 5 digits", check: (n) => n >= 10000 && n < 100000 },
             catalan: { name: "Catalan", emoji: "🎪", rarity: "epic", description: "Catalan number", check: (n) => isCatalan(n) },
-            kaprekar: { name: "Kaprekar", emoji: "🎭", rarity: "epic", description: "Kaprekar number", check: (n) => isKaprekar(n) },
-            narcissistic: { name: "Narcissistic", emoji: "🪞", rarity: "epic", description: "Sum of digit powers", check: (n) => isNarcissistic(n) },
             abundant: { name: "Abundant", emoji: "🤑", rarity: "rare", description: "Sum of divisors > number", check: (n) => isAbundant(n) },
             deficient: { name: "Deficient", emoji: "💔", rarity: "uncommon", description: "Sum of divisors < number", check: (n) => isDeficient(n) },
-            automorphic: { name: "Automorphic", emoji: "🔄", rarity: "rare", description: "Square ends in number", check: (n) => isAutomorphic(n) },
             hamming: { name: "Hamming", emoji: "🎵", rarity: "uncommon", description: "Factors 2, 3, 5 only", check: (n) => isHamming(n) },
             practical: { name: "Practical", emoji: "🛠️", rarity: "uncommon", description: "Practical number", check: (n) => isPractical(n) },
             composite: { name: "Composite", emoji: "🏗️", rarity: "common", description: "Not prime, not 1", check: (n) => n > 1 && !isPrime(n) },
             one: { name: "The One", emoji: "1️⃣", rarity: "mythic", description: "The number 1", check: (n) => n === 1 },
-            lucky_eight: { name: "Lucky 8", emoji: "∞", rarity: "uncommon", description: "Contains or divisible by 8", check: (n) => n.toString().includes('8') || n % 8 === 0 },
             twin_prime: { name: "Twin Prime", emoji: "👯", rarity: "rare", description: "Twin prime pair", check: (n) => isTwinPrime(n) },
             mersenne: { name: "Mersenne", emoji: "🌀", rarity: "mythic", description: "Mersenne prime form", check: (n) => isMersenne(n) },
             fermat: { name: "Fermat", emoji: "⭐", rarity: "mythic", description: "Fermat number", check: (n) => isFermat(n) },
@@ -518,7 +497,6 @@
             proth: { name: "Proth", emoji: "👨‍🔬", rarity: "rare", description: "Proth number", check: (n) => isProth(n) },
             leyland: { name: "Leyland", emoji: "🎨", rarity: "epic", description: "Leyland form", check: (n) => isLeyland(n) },
             sexy_prime: { name: "Sexy Prime", emoji: "😎", rarity: "rare", description: "Differs from prime by 6", check: (n) => isSexy(n) },
-            untouchable: { name: "Untouchable", emoji: "👻", rarity: "epic", description: "Cannot be sum of divisors", check: (n) => isUntouchable(n) },
             pell: { name: "Pell", emoji: "🌳", rarity: "epic", description: "Pell sequence", check: (n) => isPell(n) },
             bell: { name: "Bell", emoji: "🔔", rarity: "epic", description: "Bell number", check: (n) => isBell(n) },
             partition: { name: "Partition", emoji: "🧩", rarity: "rare", description: "Partition function", check: (n) => isPartition(n) },
@@ -533,33 +511,19 @@
 
         // Math functions
         function isPrime(n) { if(n<2)return false; if(n===2)return true; if(n%2===0)return false; for(let i=3;i<=Math.sqrt(n);i+=2)if(n%i===0)return false; return true; }
-        function isPalindrome(n) { const s=n.toString(); return s===s.split('').reverse().join(''); }
         function isPerfectSquare(n) { const r=Math.sqrt(n); return r===Math.floor(r)&&n>1; }
         function isPerfectCube(n) { const r=Math.cbrt(n); return r===Math.floor(r)&&n>1; }
         function isFibonacci(n) { let a=0,b=1; while(a<n){[a,b]=[b,a+b];} return a===n; }
         function isPowerOfTwo(n) { return n>0&&(n&(n-1))===0; }
         function isPowerOfThree(n) { if(n<1)return false; while(n%3===0)n/=3; return n===1; }
         function isPowerOfFive(n) { if(n<1)return false; while(n%5===0)n/=5; return n===1; }
-        function hasRepeatingDigits(n) { const d=n.toString(); return new Set(d).size<d.length; }
-        function allSameDigits(n) { const d=n.toString(); return d.length>1&&new Set(d).size===1; }
-        function allOddDigits(n) { const d=n.toString().split(''); return d.length>1&&d.every(x=>parseInt(x)%2===1); }
-        function allEvenDigits(n) { const d=n.toString().split(''); return d.length>1&&d.every(x=>parseInt(x)%2===0); }
         function isMemeNumber(n) { return [42,69,420,666,777,888,999,1337,4200,6969,80085].includes(n); }
-        function isAscendingDigits(n) { const d=n.toString().split('').map(Number); if(d.length<2)return false; for(let i=1;i<d.length;i++)if(d[i]<=d[i-1])return false; return true; }
-        function isDescendingDigits(n) { const d=n.toString().split('').map(Number); if(d.length<2)return false; for(let i=1;i<d.length;i++)if(d[i]>=d[i-1])return false; return true; }
         function isTriangular(n) { const x=(Math.sqrt(1+8*n)-1)/2; return x===Math.floor(x)&&n>0; }
         function isPerfectNumber(n) { return [6,28,496,8128].includes(n); }
-        function digitSum(n) { return n.toString().split('').reduce((a,b)=>a+parseInt(b),0); }
-        function digitalRoot(n) { while(n>=10)n=digitSum(n); return n; }
-        function isArmstrong(n) { const d=n.toString().split('').map(Number); const s=d.reduce((a,x)=>a+Math.pow(x,d.length),0); return s===n; }
         function isHarshad(n) { return n%digitSum(n)===0; }
-        function isHappy(n) { const s=new Set(); while(n!==1&&!s.has(n)){s.add(n); n=n.toString().split('').reduce((a,d)=>a+parseInt(d)**2,0);} return n===1; }
         function isCatalan(n) { return [1,1,2,5,14,42,132,429,1430,4862,16796,58786,208012,742900].includes(n); }
-        function isKaprekar(n) { if(n===1)return true; const sq=(n*n).toString(); const len=n.toString().length; const l=parseInt(sq.slice(0,-len)||'0'); const r=parseInt(sq.slice(-len)); return l+r===n; }
-        function isNarcissistic(n) { const d=n.toString().split('').map(Number); const s=d.reduce((a,x)=>a+Math.pow(x,d.length),0); return s===n; }
         function isAbundant(n) { let s=1; for(let i=2;i*i<=n;i++)if(n%i===0)s+=i+(i!==n/i?n/i:0); return s>n&&n>1; }
         function isDeficient(n) { let s=1; for(let i=2;i*i<=n;i++)if(n%i===0)s+=i+(i!==n/i?n/i:0); return s<n&&n>1; }
-        function isAutomorphic(n) { const sq=(n*n).toString(); return sq.endsWith(n.toString()); }
         function isHamming(n) { let x=n; while(x%2===0)x/=2; while(x%3===0)x/=3; while(x%5===0)x/=5; return x===1; }
         function isPractical(n) { if(n===1)return true; if(n%2===1)return false; let s=1; for(let i=2;i*i<=n;i++)if(n%i===0){if(i>s+1)return false; s+=i;} return true; }
         function isTwinPrime(n) { return (isPrime(n)&&isPrime(n+2))||(isPrime(n)&&isPrime(n-2)); }
@@ -604,10 +568,6 @@
                 if (badge.check(number)) earned.push(id);
             });
 
-            let ep = 0;
-            const rarityVals = { common: 10, uncommon: 25, rare: 50, epic: 100, anomaly: 250, mythic: 500 };
-            earned.forEach(id => { ep += rarityVals[BADGES[id].rarity]; });
-
             gameData.rolls.unshift({
                 number: number,
                 timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
@@ -619,17 +579,17 @@
             earned.forEach(id => { gameData.badgeCollection[id]++; });
             gameData.totalEP += ep;
             saveGameData();
-            displayRoll(number, earned, ep);
+            displayRoll(number, earned, number);
             updateUI();
         }
 
-        function getRarity(ep) {
-            if (ep >= 500) return 'Mythic';
-            if (ep >= 250) return 'Anomaly';
-            if (ep >= 100) return 'Epic';
-            if (ep >= 50) return 'Rare';
-            if (ep >= 25) return 'Uncommon';
-            if (ep >= 10) return 'Common';
+        function getRarity(n) {
+            if (n > 100000) return 'Mythic';
+            if (n > 10000) return 'Anomaly';
+            if (n > 1000) return 'Epic';
+            if (n > 100) return 'Rare';
+            if (n > 10) return 'Uncommon';
+            if (n > 1) return 'Common';
             return 'Trash';
         }
 
