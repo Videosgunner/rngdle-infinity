@@ -592,7 +592,7 @@
             const btn = document.querySelector('.roll-button');
             btn.disabled = true;
             setTimeout(() => {
-                const num = Math.floor(Math.random() * 1000001);
+                const num = Math.floor(1/ (Math.random() ** 2));
                 analyzeNumber(num);
                 btn.disabled = false;
             }, 300);
