@@ -4,4 +4,4 @@
 - The bigger the number, the luckier (or suckier, depending on your perspective)
 - Forked from a barely-functioning and even more vibe-coded [clone](https://github.com/FairyVR/rngdle-unlimited) of [RNGdle](https://www.rngdle.com/)
 
-- Made with equal parts love and hate by [Videosgunner](https://youtube.com/@rlvideosgunner)
+Made with equal parts love and hate by [Videosgunner](https://youtube.com/@rlvideosgunner)
