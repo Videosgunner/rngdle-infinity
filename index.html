@@ -663,14 +663,13 @@
         }
 
         function isSemiprime(n) {
-            if (n < 4) return false;
             for (let i = 2; i <= Math.sqrt(n); i += 1) {
                 if (n % i === 0) {
                     n /= i;
                     break
                 }
-                return false;
             }
+            if (n === 1) return false;
             for (let j = 2; j <= Math.sqrt(n); j += 1) {
                 if (n % j === 0) return false;
             }
