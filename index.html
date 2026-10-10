@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="RNGdle Unlimited - Roll infinite random numbers and collect badges!">
+    <meta name="description" content="RNGdle Unlimited">
     <title>RNGdle Unlimited</title>
     <style>
         * {
@@ -13,9 +13,9 @@
         }
 
         :root {
-            --bg: #0a0a0a;
+            --bg: #00000a;
             --text: #ffffff;
-            --text-muted: #808080;
+            --text-muted: #404080;
             --border: #333333;
             --common: #2d5016;
             --uncommon: #0f4c75;
@@ -103,7 +103,7 @@
         .roll-button {
             display: block;
             width: 100%;
-            max-width: 400px;
+            max-width: 200px;
             margin: 30px auto;
             padding: 16px 40px;
             background: #000000;
@@ -435,13 +435,11 @@
 <body>
     <div class="container">
         <header>
-            <h1>RNGdle Unlimited</h1>
-            <p class="subtitle">Infinite rolls. Unlimited badges. No daily limits.</p>
+            <h1>RNGdle Infinity</h1>
+            <p class="subtitle">you can give birth to any natural nummber</p>
         </header>
 
         <div class="main-section">
-            <p class="number-prompt">What number will you roll?</p>
-            
             <button class="roll-button" onclick="rollNumber()">Generate</button>
 
             <div id="resultSection" style="display: none;">
@@ -759,7 +757,7 @@
             document.getElementById('rarityTag').textContent = rarity.toUpperCase();
             
             // Calculate percentile
-            const percentile = Math.round((ep / 1000) * 100);
+            const percentile = Math.round(100 / (ep ** 0.5));
             document.getElementById('percentileTag').textContent = `TOP ${Math.max(1, percentile)}%`;
             
             // Update EP
