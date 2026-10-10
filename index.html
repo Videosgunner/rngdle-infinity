@@ -88,6 +88,22 @@
             animation: numberAppear 0.5s ease-out;
         }
 
+        .number-digit {
+            display: inline-block;
+            animation: digitBuild 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes digitBuild {
+            0% {
+                opacity: 0;
+                transform: translateY(-25px) scale(0.6);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
         .number-box.common { border-color: var(--common); color: var(--common); }
         .number-box.uncommon { border-color: var(--uncommon); color: var(--uncommon); }
         .number-box.rare { border-color: var(--rare); color: var(--rare); }
@@ -745,7 +761,16 @@
             const numberBox = document.getElementById('numberBox');
             const rarityClass = rarity.toLowerCase();
             numberBox.className = `number-box ${rarityClass}`;
-            document.getElementById('numberValue').textContent = number.toLocaleString();
+            numberBox.innerHTML = '';
+
+            number.toString().split('').forEach((digit, i) => {
+                const el = document.createElement('div');
+                el.className = 'number-digit';
+                el.textContent = digit;
+                el.style.animationDelay = `${i * 0.08}s`;
+                numberBox.appendChild(el);
+            });
+
             
             // Update rarity tags
             document.getElementById('rarityTag').className = `rarity-tag ${rarityClass}`;
