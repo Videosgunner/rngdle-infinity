@@ -519,13 +519,6 @@
                 description: "A prime number",
                 check: (n) => isPrime(n)
             },
-            semiprime: {
-                name: "Semiprime",
-                emoji: "⏸",
-                rarity: "uncommon",
-                description: "Product of 2 primes",
-                check: (n) => isSemiprime(n)
-            },
             perfect_square: {
                 name: "Perfect Square",
                 emoji: "📦",
@@ -612,20 +605,6 @@
             if (n % 2 === 0) return false;
             for (let i = 3; i <= Math.sqrt(n); i += 2) {
                 if (n % i === 0) return false;
-            }
-            return true;
-        }
-
-        function isSemiprime(n) {
-            var factor = null;
-            for (let i = 2; i <= Math.sqrt(n); i += 1) {
-                if (n % i === 0) {
-                    factor = i;
-                    break
-                }
-            }
-            for (let i = 2; i <= Math.sqrt(n); i += 1) {
-                if ((n / factor) % i === 0)) return false;
             }
             return true;
         }
