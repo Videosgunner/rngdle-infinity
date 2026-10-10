@@ -527,7 +527,7 @@
                 name: "Just One",
                 emoji: "1️⃣",
                 rarity: "common",
-                description: "This is not the last time you'll read this",
+                description: "This is not the last time you'll have to read this",
                 check: (n) => isOne(n)
             },
             div_two: {
@@ -558,6 +558,13 @@
                 description: "Product of 2 prime numbers",
                 check: (n) => isSemiprime(n)
             },
+            composite: {
+                name: "Composite",
+                emoji: "⏹",
+                rarity: "rare",
+                description: "More than 2 divisors",
+                check: (n) => isPrime(n)
+            },
             perfect_square: {
                 name: "Perfect Square",
                 emoji: "⬜",
@@ -571,27 +578,6 @@
                 rarity: "rare",
                 description: "A perfect cube",
                 check: (n) => isPerfectCube(n)
-            },
-            perfect_fifth: {
-                name: "Perfect Fifth",
-                emoji: "🎵",
-                rarity: "rare",
-                description: "Not that kind of perfect fifth. Or that one",
-                check: (n) => isPerfectFifth(n)
-            },
-            perfect_fourth: {
-                name: "Perfect Fourth",
-                emoji: "🎵",
-                rarity: "epic",
-                description: "Not that kind of perfect fourth. Or that one",
-                check: (n) => isPerfectFourth(n)
-            },
-            major_third: {
-                name: "Major Third",
-                emoji: "🎵",
-                rarity: "legendary",
-                description: "You're smart enough to figure this one out by now",
-                check: (n) => isMajorThird(n)
             },
             fibonacci: {
                 name: "Fibonacci",
@@ -710,6 +696,10 @@
             }
             return false;
         }
+        
+        function isComposite(n) {
+            return isPrime(n) === isSemiprime(n);
+        }
 
         function isPerfectSquare(n) {
             const root = Math.sqrt(n);
@@ -718,21 +708,6 @@
 
         function isPerfectCube(n) {
             const root = Math.cbrt(n);
-            return root === Math.floor(root) && n > 1;
-        }
-
-        function isPerfectFifth(n) {
-            const root = n ** (2/3);
-            return root === Math.floor(root) && n > 1;
-        }
-
-        function isPerfectFourth(n) {
-            const root = n ** (3/4);
-            return root === Math.floor(root) && n > 1;
-        }
-
-        function isMajorThird(n) {
-            const root = n ** (4/5);
             return root === Math.floor(root) && n > 1;
         }
 
