@@ -16,7 +16,7 @@
             --bg: #00000a;
             --text: #e8e0ff;
             --text-muted: #404080;
-            --border: #100040;
+            --border: #300060;
             --common: #808080;
             --uncommon: #00ff00;
             --rare: #0000ff;
@@ -452,8 +452,6 @@
                     <span class="rarity-tag" id="percentileTag">—</span>
                 </div>
 
-                <div class="ep-display" id="epDisplay">0 EP</div>
-
                 <div class="badge-breakdown" id="badgeBreakdown" style="display: none;">
                     <div class="breakdown-title">Badge Breakdown</div>
                     <div class="badge-count-label" id="badgeCountLabel">0 badges earned</div>
@@ -732,13 +730,12 @@
         }
 
         function getRarity(n) {
-            if (n > 1048576) return 'Mythic';
-            if (n > 65536) return 'Legendary';
-            if (n > 4096) return 'Epic';
-            if (n > 256) return 'Rare';
-            if (n > 16) return 'Uncommon';
-            if (n > 1) return 'Common';
-            return 'Trash';
+            if (n >= 1048576) return 'Mythic';
+            if (n >= 65536) return 'Legendary';
+            if (n >= 4096) return 'Epic';
+            if (n >= 256) return 'Rare';
+            if (n >= 16) return 'Uncommon';
+            if (n >= 1) return 'Common';
         }
 
         function displayRoll(number, badgeIds, ep) {
@@ -759,9 +756,6 @@
             // Calculate percentile
             const percentile = Math.round(100 / (ep ** 0.5));
             document.getElementById('percentileTag').textContent = `TOP ${Math.max(1, percentile)}%`;
-            
-            // Update EP
-            document.getElementById('epDisplay').innerHTML = `${ep.toLocaleString()} EP<br><span style="font-size: 0.8em; color: var(--text-muted);">${ep.toLocaleString()} LIFETIME EP</span>`;
             
             // Display badge breakdown
             const badgeBreakdown = document.getElementById('badgeBreakdown');
