@@ -512,27 +512,6 @@
     <script>
         // Badge definitions (30+ badges)
         const BADGES = {
-            one: {
-                name: "Just One",
-                emoji: "1️⃣",
-                rarity: "common",
-                description: "There's a 29.29% you got this",
-                check: (n) => isOne(n)
-            },
-            div_two: {
-                name: "Even",
-                emoji: "🥈",
-                rarity: "common",
-                description: "Divisible by 2",
-                check: (n) => isEven(n)
-            },
-            div_three: {
-                name: "Threeven",
-                emoji: "🥉",
-                rarity: "common",
-                description: "Divisible by 3",
-                check: (n) => isThreeven(n)
-            },
             prime: {
                 name: "Prime Time",
                 emoji: "⏹",
@@ -627,38 +606,6 @@
         };
 
         // Math functions
-        function isBig(n) {
-            return 16 <= n < 256;
-        }
-
-        function isHuge(n) {
-            return 256 <= n < 4096;
-        }
-
-        function isGigantic(n) {
-            return 4096 <= n < 65536;
-        }
-
-        function isColossal(n) {
-            return 65536 <= n < 1048576;
-        }
-
-        function isCosmic(n) {
-            return n >= 1048576;
-        }
-
-        function isOne(n) {
-            return n === 1;
-        }
-
-        function isEven(n) {
-            return n % 2 === 0;
-        }
-
-        function isThreeven(n) {
-            return n % 3 === 0;
-        }
-        
         function isPrime(n) {
             if (n < 2) return false;
             if (n === 2) return true;
