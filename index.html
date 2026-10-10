@@ -701,10 +701,6 @@
                 rarity: getRarity(number)
             });
 
-            if (gameData.rolls.length > 50) {
-                gameData.rolls = gameData.rolls.slice(0, 50);
-            }
-
             earnedBadgeIds.forEach(badgeId => {
                 gameData.badgeCollection[badgeId]++;
             });
