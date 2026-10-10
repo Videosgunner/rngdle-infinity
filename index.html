@@ -537,6 +537,48 @@
                 description: "In the bottom half of rolls",
                 check: (n) => isTrash(n)
             },
+            big: {
+                name: "Big",
+                emoji: "📦",
+                rarity: "common",
+                description: "",
+                check: (n) => isBig(n)
+            },
+            huge: {
+                name: "Huge",
+                emoji: "🛢",
+                rarity: "uncommon",
+                description: "",
+                check: (n) => isHuge(n)
+            },
+            gigantic: {
+                name: "Gigantic",
+                emoji: "🚢",
+                rarity: "rare",
+                description: "",
+                check: (n) => isGigantic(n)
+            },
+            colossal: {
+                name: "Colossal",
+                emoji: "🏔",
+                rarity: "epic",
+                description: "",
+                check: (n) => isColossal(n)
+            },
+            cosmic: {
+                name: "Cosmic",
+                emoji: "🌌",
+                rarity: "legendary",
+                description: "",
+                check: (n) => isCosmic(n)
+            },
+            infinite: {
+                name: "Infinite",
+                emoji: "♾",
+                rarity: "mythic",
+                description: "Practically infinite",
+                check: (n) => isInfinite(n)
+            },
             div_two: {
                 name: "Even",
                 emoji: "🥈",
@@ -669,6 +711,10 @@
             return n >= 1048576;
         }
 
+        function isInfinite(n) {
+            return n >= 4294967296;
+        }
+
         function isOne(n) {
             return n === 1;
         }
@@ -709,7 +755,8 @@
         }
         
         function isComposite(n) {
-            return isPrime(n) === isSemiprime(n) === isOne(n);
+            if (n === 1) return false;
+            return isPrime(n) === isSemiprime(n);
         }
 
         function isPerfectSquare(n) {
