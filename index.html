@@ -81,7 +81,7 @@
             padding: 30px 50px;
             font-size: 4em;
             font-weight: 700;
-            font-family: 'Inter', monospace;
+            font-family: 'Courier New', monospace;
             margin: 30px 0;
             min-width: 300px;
             letter-spacing: 3px;
@@ -562,14 +562,14 @@
                 check: (n) => n === 1000000
             },
             power_of_three: {
-                name: "Triple Power",
+                name: "Power of Three",
                 emoji: "3️⃣",
                 rarity: "rare",
                 description: "Power of 3",
                 check: (n) => isPowerOfThree(n)
             },
             power_of_five: {
-                name: "Five Squared",
+                name: "Power of Five",
                 emoji: "5️⃣",
                 rarity: "rare",
                 description: "Power of 5",
@@ -698,7 +698,7 @@
                 timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
                 badges: earnedBadgeIds,
                 ep: ep,
-                rarity: getRarity(ep)
+                rarity: getRarity(number)
             });
 
             if (gameData.rolls.length > 50) {
@@ -711,7 +711,7 @@
 
             gameData.totalEP += ep;
             saveGameData();
-            displayRoll(number, earnedBadgeIds, ep);
+            displayRoll(number, earnedBadgeIds, number);
             updateUI();
         }
 
@@ -731,13 +731,13 @@
             return ep;
         }
 
-        function getRarity(ep) {
-            if (ep >= 500) return 'Mythic';
-            if (ep >= 250) return 'Anomaly';
-            if (ep >= 100) return 'Epic';
-            if (ep >= 50) return 'Rare';
-            if (ep >= 25) return 'Uncommon';
-            if (ep >= 10) return 'Common';
+        function getRarity(n) {
+            if (n > 1048576) return 'Mythic';
+            if (n > 65536) return 'Legendary';
+            if (n > 4096) return 'Epic';
+            if (n > 256) return 'Rare';
+            if (n > 16) return 'Uncommon';
+            if (n > 1) return 'Common';
             return 'Trash';
         }
 
