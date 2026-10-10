@@ -765,15 +765,6 @@
                     const rarityValues = { 'common': 10, 'uncommon': 25, 'rare': 50, 'epic': 100, 'anomaly': 250, 'mythic': 500 };
                     const badgeEP = rarityValues[badge.rarity];
                     
-                    // Show which digits are in the number
-                    const numberDigits = new Set(numberStr);
-                    const digitBoxes = Array.from({ length: 10 }, (_, i) => {
-                        if (numberDigits.has(i.toString())) {
-                            return `<div class="digit-box ${badge.rarity}">${i}</div>`;
-                        }
-                        return `<div class="digit-box none">—</div>`;
-                    }).join('');
-                    
                     return `
                         <div class="badge-item ${badge.rarity}">
                             <div class="badge-header">
@@ -785,7 +776,6 @@
                                 <div class="badge-ep">+${badgeEP.toLocaleString()} EP</div>
                             </div>
                             <div class="badge-description">${badge.description}</div>
-                            <div class="badge-digits">${digitBoxes}</div>
                         </div>
                     `;
                 }).join('');
@@ -798,10 +788,7 @@
             }
             
             resultSection.style.display = 'block';
-
-            setTimeout(() => {
-                resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 100);
+            
         }
 
         function updateUI() {
