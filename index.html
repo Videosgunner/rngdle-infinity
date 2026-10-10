@@ -757,6 +757,7 @@
             const resultSection = document.getElementById('resultSection');
             const rarity = getRarity(ep);
             const numberStr = number.toString();
+            const multi = number ** 0.5
             
             // Update number box with rarity color
             const numberBox = document.getElementById('numberBox');
@@ -801,7 +802,7 @@
                                     <div class="badge-name">${badge.name}</div>
                                     <div class="badge-rarity">${badge.rarity.toUpperCase()}</div>
                                 </div>
-                                <div class="badge-ep">+${badgeEP.toLocaleString()} EP</div>
+                                <div class="badge-ep">+${Math.round(badgeEP * multi).toLocaleString()} EP</div>
                             </div>
                             <div class="badge-description">${badge.description}</div>
                         </div>
