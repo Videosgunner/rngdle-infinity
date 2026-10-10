@@ -667,12 +667,12 @@
                 if (n % i === 0) {
                     n /= i;
                     for (let j = 2; j <= Math.sqrt(n); j += 1) {
-                        if (n % j === 0) return false;
+                        if (n % j === 0) return 0;
                     }
-                    return true;
+                    return 1;
                 }
             }
-            return false;
+            return 2;
         }
 
         function isPerfectSquare(n) {
