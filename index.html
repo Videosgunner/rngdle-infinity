@@ -21,7 +21,7 @@
             --uncommon: #00ff00;
             --rare: #0000ff;
             --epic: #8000ff;
-            --anomaly: #a00000;
+            --legendary: #ffc000;
             --mythic: #ff00ff;
         }
 
@@ -81,9 +81,9 @@
             padding: 30px 50px;
             font-size: 4em;
             font-weight: 700;
-            font-family: 'Courier New', monospace;
+            font-family: 'FreeMono', monospace;
             margin: 30px 0;
-            min-width: 300px;
+            min-width: 100px;
             letter-spacing: 3px;
             animation: numberAppear 0.5s ease-out;
         }
@@ -92,7 +92,7 @@
         .number-box.uncommon { border-color: var(--uncommon); color: var(--uncommon); }
         .number-box.rare { border-color: var(--rare); color: var(--rare); }
         .number-box.epic { border-color: var(--epic); color: var(--epic); }
-        .number-box.anomaly { border-color: var(--anomaly); color: var(--anomaly); }
+        .number-box.legendary { border-color: var(--legendary); color: var(--legendary); }
         .number-box.mythic { border-color: var(--mythic); color: var(--mythic); }
 
         @keyframes numberAppear {
@@ -148,11 +148,11 @@
         .rarity-tag.uncommon { border-color: var(--uncommon); color: var(--uncommon); }
         .rarity-tag.rare { border-color: var(--rare); color: var(--rare); }
         .rarity-tag.epic { border-color: var(--epic); color: var(--epic); }
-        .rarity-tag.anomaly { border-color: var(--anomaly); color: var(--anomaly); }
+        .rarity-tag.legendary { border-color: var(--legendary); color: var(--legendary); }
         .rarity-tag.mythic { border-color: var(--mythic); color: var(--mythic); }
 
         .ep-display {
-            color: var(--anomaly);
+            color: var(--legendary);
             font-weight: 700;
             font-size: 1.1em;
             margin-top: 15px;
@@ -200,7 +200,7 @@
         .badge-item.uncommon { border-left-color: var(--uncommon); }
         .badge-item.rare { border-left-color: var(--rare); }
         .badge-item.epic { border-left-color: var(--epic); }
-        .badge-item.anomaly { border-left-color: var(--anomaly); }
+        .badge-item.legendary { border-left-color: var(--legendary); }
         .badge-item.mythic { border-left-color: var(--mythic); }
 
         .badge-header {
@@ -233,7 +233,7 @@
 
         .badge-ep {
             font-weight: 700;
-            color: var(--anomaly);
+            color: var(--legendary);
             font-size: 0.9em;
             margin-left: auto;
         }
@@ -269,7 +269,7 @@
         .digit-box.uncommon { background: var(--uncommon); }
         .digit-box.rare { background: var(--rare); }
         .digit-box.epic { background: var(--epic); }
-        .digit-box.anomaly { background: var(--anomaly); }
+        .digit-box.legendary { background: var(--legendary); }
 
         .stats-grid {
             display: grid;
@@ -699,10 +699,6 @@
                 rarity: getRarity(number)
             });
 
-            if (gameData.rolls.length > 50) {
-                gameData.rolls = gameData.rolls.slice(0, 50);
-            }
-
             earnedBadgeIds.forEach(badgeId => {
                 gameData.badgeCollection[badgeId]++;
             });
@@ -720,7 +716,7 @@
                 'uncommon': 25,
                 'rare': 50,
                 'epic': 100,
-                'anomaly': 250,
+                'legendary': 250,
                 'mythic': 500
             };
             badgeIds.forEach(badgeId => {
@@ -754,8 +750,8 @@
             document.getElementById('rarityTag').textContent = rarity.toUpperCase();
             
             // Calculate percentile
-            const percentile = Math.round(100 / (ep ** 0.5));
-            document.getElementById('percentileTag').textContent = `TOP ${Math.max(1, percentile)}%`;
+            const percentile = Math.ceiling(10000 / (ep ** 0.5)) / 100;
+            document.getElementById('percentileTag').textContent = `TOP ${percentile}%`;
             
             // Display badge breakdown
             const badgeBreakdown = document.getElementById('badgeBreakdown');
@@ -764,7 +760,7 @@
                 
                 const badgesHTML = badgeIds.map(id => {
                     const badge = BADGES[id];
-                    const rarityValues = { 'common': 10, 'uncommon': 25, 'rare': 50, 'epic': 100, 'anomaly': 250, 'mythic': 500 };
+                    const rarityValues = { 'common': 10, 'uncommon': 25, 'rare': 50, 'epic': 100, 'legendary': 250, 'mythic': 500 };
                     const badgeEP = rarityValues[badge.rarity];
                     
                     // Show which digits are in the number
@@ -855,7 +851,7 @@
                             <div class="history-number">${roll.number.toLocaleString()}</div>
                             <div class="history-time">${timeStr} • ${roll.badges.length} badge${roll.badges.length !== 1 ? 's' : ''}</div>
                         </div>
-                        <div style="color: var(--anomaly); font-weight: 700;">+${roll.ep} EP</div>
+                        <div style="color: var(--legendary); font-weight: 700;">+${roll.ep} EP</div>
                     </div>
                 `;
             }).join('');
