@@ -490,7 +490,7 @@
                 <div class="stat-label">Badges Found</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number" id="highestRoll">0</div>
+                <div class="stat-number" id="highRoll">0</div>
                 <div class="stat-label">Highest Roll</div>
             </div>
         </div>
@@ -954,7 +954,7 @@
         function updateUI() {
             document.getElementById('totalRolls').textContent = gameData.rolls.length;
             document.getElementById('totalEP').textContent = gameData.totalEP.toLocaleString();
-            document.getElementById('highestRoll').textContent = gameData.highestRoll;
+            document.getElementById('highRoll').textContent = gameData.highestRoll.toLocaleString();
 
             let uniqueBadges = 0;
             Object.values(gameData.badgeCollection).forEach(count => {
