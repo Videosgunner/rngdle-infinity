@@ -471,7 +471,6 @@
                 <div class="badge-breakdown" id="badgeBreakdown" style="display: none;">
                     <div class="breakdown-title">Badge Breakdown</div>
                     <div class="badge-count-label" id="badgeCountLabel">0 badges earned</div>
-                    <div class="badge-count-label" id="badgeMultiplierLabel">0x multiplier</div>
                     <div id="earnedBadges"></div>
                 </div>
             </div>
@@ -780,14 +779,13 @@
             
             // Calculate percentile
             const percentile = Math.round(10000 / (ep ** 0.5)) / 100;
-            const multiplier = Math.round(100 * ep ** 0.5) / 100;
+            const multiplier = Math.round(100 * multi) / 100;
             document.getElementById('percentileTag').textContent = `TOP ${percentile.toString()}%`;
             
             // Display badge breakdown
             const badgeBreakdown = document.getElementById('badgeBreakdown');
             if (badgeIds.length > 0) {
-                document.getElementById('badgeCountLabel').textContent = `${badgeIds.length} BADGE${badgeIds.length !== 1 ? 'S' : ''} EARNED`;
-                document.getElementById('badgeMultiplierLabel').textContent = `${multiplier} MULTIPLIER`;
+                document.getElementById('badgeCountLabel').textContent = `${badgeIds.length} BADGE${badgeIds.length !== 1 ? 'S' : ''} EARNED | ${multiplier}x MULTIPLIER`;
                 
                 const badgesHTML = badgeIds.map(id => {
                     const badge = BADGES[id];
