@@ -512,6 +512,27 @@
     <script>
         // Badge definitions (30+ badges)
         const BADGES = {
+            one: {
+                name: "Just One",
+                emoji: "1️⃣",
+                rarity: "common",
+                description: "There's a 29.29% you got this",
+                check: (n) => isOne(n)
+            },
+            div_two: {
+                name: "Even",
+                emoji: "🥈",
+                rarity: "common",
+                description: "Divisible by 2",
+                check: (n) => isEven(n)
+            },
+            div_three: {
+                name: "Threeven",
+                emoji: "🥉",
+                rarity: "common",
+                description: "Divisible by 3",
+                check: (n) => isThreeven(n)
+            },
             prime: {
                 name: "Prime Time",
                 emoji: "⏹",
@@ -519,9 +540,16 @@
                 description: "A prime number",
                 check: (n) => isPrime(n)
             },
+            semiprime: {
+                name: "Semiprime",
+                emoji: "⏸",
+                rarity: "uncommon",
+                description: "Product of 2 prime numbers",
+                check: (n) => isSemiprime(n)
+            },
             perfect_square: {
                 name: "Perfect Square",
-                emoji: "📦",
+                emoji: "⬜",
                 rarity: "rare",
                 description: "A perfect square",
                 check: (n) => isPerfectSquare(n)
@@ -561,13 +589,6 @@
                 description: "Perfect number",
                 check: (n) => isPerfectNumber(n)
             },
-            round_number: {
-                name: "Round",
-                emoji: "⭕",
-                rarity: "common",
-                description: "Ends in zeros",
-                check: (n) => n > 0 && n % 100 === 0
-            },
             one_million: {
                 name: "Jackpot",
                 emoji: "💰",
@@ -599,11 +620,57 @@
         };
 
         // Math functions
+        function isBig(n) {
+            return 16 <= n < 256;
+        }
+
+        function isHuge(n) {
+            return 256 <= n < 4096;
+        }
+
+        function isGigantic(n) {
+            return 4096 <= n < 65536;
+        }
+
+        function isColossal(n) {
+            return 65536 <= n < 1048576;
+        }
+
+        function isCosmic(n) {
+            return n >= 1048576;
+        }
+
+        function isOne(n) {
+            return n === 1;
+        }
+
+        function isEven(n) {
+            return n % 2 === 0;
+        }
+
+        function isThreeven(n) {
+            return n % 3 === 0;
+        }
+        
         function isPrime(n) {
             if (n < 2) return false;
             if (n === 2) return true;
             if (n % 2 === 0) return false;
             for (let i = 3; i <= Math.sqrt(n); i += 2) {
+                if (n % i === 0) return false;
+            }
+            return true;
+        }
+
+        function isSemiprime(n) {
+            for (let i = 2; i <= Math.sqrt(n); i += 1) {
+                if (n % i === 0) {
+                    n /= i;
+                    break
+                }
+                return false;
+            }
+            for (let i = 2; i <= Math.sqrt(n); i += 1) {
                 if (n % i === 0) return false;
             }
             return true;
