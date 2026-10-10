@@ -527,8 +527,15 @@
                 name: "Just One",
                 emoji: "1️⃣",
                 rarity: "common",
-                description: "This is not the last time you'll have to read this",
+                description: "It's 1",
                 check: (n) => isOne(n)
+            },
+            trash: {
+                name: "Trash",
+                emoji: "🗑",
+                rarity: "common",
+                description: "In the bottom half of rolls",
+                check: (n) => isTrash(n)
             },
             div_two: {
                 name: "Even",
@@ -560,8 +567,8 @@
             },
             composite: {
                 name: "Composite",
-                emoji: "⏹",
-                rarity: "rare",
+                emoji: "🏙",
+                rarity: "common",
                 description: "More than 2 divisors",
                 check: (n) => isPrime(n)
             },
@@ -664,6 +671,10 @@
 
         function isOne(n) {
             return n === 1;
+        }
+        
+        function isTrash(n) {
+            return n < 4;
         }
 
         function isEven(n) {
