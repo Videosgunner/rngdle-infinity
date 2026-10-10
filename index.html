@@ -489,6 +489,10 @@
                 <div class="stat-number" id="uniqueBadges">0</div>
                 <div class="stat-label">Badges Found</div>
             </div>
+            <div class="stat-box">
+                <div class="stat-number" id="highRoll">0</div>
+                <div class="stat-label">Highest Roll</div>
+            </div>
         </div>
 
         <div class="section">
@@ -787,7 +791,9 @@
         let gameData = {
             rolls: [],
             badgeCollection: {},
-            totalEP: 0
+            totalEP: 0,
+            highestRoll: 0,
+            dud: "dud"
         };
 
         function loadGameData() {
@@ -845,6 +851,10 @@
             });
 
             gameData.totalEP += ep;
+            
+            if (number > gameData.highestRoll) {
+                gameData.highestRoll = number;
+            };
             
             saveGameData();
             displayRoll(number, earnedBadgeIds, number);
@@ -945,6 +955,7 @@
         function updateUI() {
             document.getElementById('totalRolls').textContent = gameData.rolls.length;
             document.getElementById('totalEP').textContent = gameData.totalEP.toLocaleString();
+            document.getElementById('highRoll').textContent = gameData.highestRoll.toLocaleString();
 
             let uniqueBadges = 0;
             Object.values(gameData.badgeCollection).forEach(count => {
