@@ -692,19 +692,19 @@
         }
         
         function isBig(n) {
-            return 16 <= n < 256;
+            return n >= 16 && n < 256;
         }
 
         function isHuge(n) {
-            return 256 <= n < 4096;
+            return n >= 256 && n < 4096;
         }
 
         function isGigantic(n) {
-            return 4096 <= n < 65536;
+            return n >= 4096 && n < 65536;
         }
 
         function isColossal(n) {
-            return 65536 <= n < 1048576;
+            return n >= 65536 && n < 1048576;
         }
 
         function isCosmic(n) {
