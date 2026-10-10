@@ -489,6 +489,10 @@
                 <div class="stat-number" id="uniqueBadges">0</div>
                 <div class="stat-label">Badges Found</div>
             </div>
+            <div class="stat-box">
+                <div class="stat-number" id="highestRoll">0</div>
+                <div class="stat-label">Highest Roll</div>
+            </div>
         </div>
 
         <div class="section">
@@ -512,11 +516,18 @@
     <script>
         // Badge definitions (30+ badges)
         const BADGES = {
+            really_lucky: {
+                name: "good job",
+                emoji: "⭐",
+                rarity: "legendary",
+                description: "Each roll, you have a 0.01% of getting this badge",
+                check: (n) => LuckCheck(n)
+            },
             one: {
                 name: "Just One",
                 emoji: "1️⃣",
                 rarity: "common",
-                description: "There's a 29.29% you got this",
+                description: "This is not the last time you'll read this",
                 check: (n) => isOne(n)
             },
             div_two: {
@@ -534,10 +545,10 @@
                 check: (n) => isThreeven(n)
             },
             prime: {
-                name: "Prime Time",
+                name: "Prime",
                 emoji: "⏹",
                 rarity: "rare",
-                description: "A prime number",
+                description: "Indivisible by any number but 1 and itself",
                 check: (n) => isPrime(n)
             },
             semiprime: {
@@ -561,11 +572,32 @@
                 description: "A perfect cube",
                 check: (n) => isPerfectCube(n)
             },
+            perfect_fifth: {
+                name: "Perfect Fifth",
+                emoji: "🎵",
+                rarity: "rare",
+                description: "Not that kind of perfect fifth. Or that one",
+                check: (n) => isPerfectFifth(n)
+            },
+            perfect_fourth: {
+                name: "Perfect Fourth",
+                emoji: "🎵",
+                rarity: "epic",
+                description: "Not that kind of perfect fourth. Or that one",
+                check: (n) => isPerfectFourth(n)
+            },
+            major_third: {
+                name: "Major Third",
+                emoji: "🎵",
+                rarity: "legendary",
+                description: "You're smart enough to figure this one out by now",
+                check: (n) => isMajorThird(n)
+            },
             fibonacci: {
                 name: "Fibonacci",
                 emoji: "🌀",
                 rarity: "epic",
-                description: "Fibonacci sequence",
+                description: "Member of the fibonacci sequence",
                 check: (n) => isFibonacci(n)
             },
             power_of_two: {
@@ -579,22 +611,15 @@
                 name: "Triangular",
                 emoji: "△",
                 rarity: "epic",
-                description: "Triangular number",
+                description: "Partial sum of the natural numbers",
                 check: (n) => isTriangular(n)
             },
             perfect_number: {
                 name: "Perfect",
                 emoji: "✨",
                 rarity: "mythic",
-                description: "Perfect number",
+                description: "Equal to the sum of its divisors",
                 check: (n) => isPerfectNumber(n)
-            },
-            one_million: {
-                name: "Jackpot",
-                emoji: "💰",
-                rarity: "mythic",
-                description: "1,000,000!",
-                check: (n) => n === 1000000
             },
             power_of_three: {
                 name: "Power of Three",
@@ -614,12 +639,23 @@
                 name: "Catalan",
                 emoji: "🎪",
                 rarity: "epic",
-                description: "Catalan number",
+                description: "Useful in combinatorics, allegedly",
                 check: (n) => isCatalan(n)
             },
+            factorial: {
+                name: "Factorial",
+                emoji: "❗",
+                rarity: "legendary",
+                description: "Partial product of the natural numbers",
+                check: (n) => isFactorial(n)
+            }
         };
 
         // Math functions
+        function LuckCheck(n) {
+            return Math.random() < 0.5;
+        }
+        
         function isBig(n) {
             return 16 <= n < 256;
         }
@@ -685,6 +721,21 @@
             return root === Math.floor(root) && n > 1;
         }
 
+        function isPerfectFifth(n) {
+            const root = n ** (3/2);
+            return root === Math.floor(root) && n > 1;
+        }
+
+        function isPerfectFourth(n) {
+            const root = n ** (4/3);
+            return root === Math.floor(root) && n > 1;
+        }
+
+        function isMajorThird(n) {
+            const root = n ** (5/4);
+            return root === Math.floor(root) && n > 1;
+        }
+
         function isFibonacci(n) {
             let a = 0, b = 1;
             while (a < n) {
@@ -726,11 +777,22 @@
             return catalan.includes(n);
         }
 
+        function isFactorial(n) {
+            let i = 1;
+            while (n >= 1) {
+                n /= i;
+                if (n === 1) return true;
+                i++;
+            }
+            return false;
+        }
+
         // Game logic
         let gameData = {
             rolls: [],
             badgeCollection: {},
-            totalEP: 0
+            totalEP: 0,
+            highestRoll: 0
         };
 
         function loadGameData() {
@@ -788,6 +850,11 @@
             });
 
             gameData.totalEP += ep;
+
+            if (number > gameData.highestRoll) {
+                gameData.highestRoll = number;
+            }
+            
             saveGameData();
             displayRoll(number, earnedBadgeIds, number);
             updateUI();
@@ -887,6 +954,7 @@
         function updateUI() {
             document.getElementById('totalRolls').textContent = gameData.rolls.length;
             document.getElementById('totalEP').textContent = gameData.totalEP.toLocaleString();
+            document.getElementById('highestRoll').textContent = gameData.highestRoll;
 
             let uniqueBadges = 0;
             Object.values(gameData.badgeCollection).forEach(count => {
