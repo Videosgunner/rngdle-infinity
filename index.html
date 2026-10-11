@@ -343,7 +343,7 @@
 
         .badge-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
             gap: 12px;
         }
 
@@ -593,12 +593,12 @@
                 description: "Divisible by 3",
                 check: (n) => isThreeven(n)
             },
-            prime: {
-                name: "Prime",
-                emoji: "⏹",
-                rarity: "rare",
-                description: "Indivisible by any number but 1 and itself",
-                check: (n) => isPrime(n)
+            composite: {
+                name: "Composite",
+                emoji: "🏙",
+                rarity: "common",
+                description: "More than 2 divisors",
+                check: (n) => isComposite(n)
             },
             semiprime: {
                 name: "Semiprime",
@@ -607,17 +607,17 @@
                 description: "Product of 2 prime numbers",
                 check: (n) => isSemiprime(n)
             },
-            composite: {
-                name: "Composite",
-                emoji: "🏙",
-                rarity: "common",
-                description: "More than 2 divisors",
-                check: (n) => isComposite(n)
+            prime: {
+                name: "Prime",
+                emoji: "⏹",
+                rarity: "rare",
+                description: "Indivisible by any number but 1 and itself",
+                check: (n) => isPrime(n)
             },
             perfect_square: {
                 name: "Perfect Square",
                 emoji: "⬜",
-                rarity: "rare",
+                rarity: "uncommon",
                 description: "A perfect square",
                 check: (n) => isPerfectSquare(n)
             },
@@ -628,33 +628,12 @@
                 description: "A perfect cube",
                 check: (n) => isPerfectCube(n)
             },
-            fibonacci: {
-                name: "Fibonacci",
-                emoji: "🌀",
-                rarity: "epic",
-                description: "Member of the fibonacci sequence",
-                check: (n) => isFibonacci(n)
-            },
             power_of_two: {
                 name: "Power of Two",
                 emoji: "⚡",
                 rarity: "rare",
                 description: "A power of 2",
                 check: (n) => isPowerOfTwo(n)
-            },
-            triangular: {
-                name: "Triangular",
-                emoji: "△",
-                rarity: "epic",
-                description: "Partial sum of the natural numbers",
-                check: (n) => isTriangular(n)
-            },
-            perfect_number: {
-                name: "Perfect",
-                emoji: "✨",
-                rarity: "mythic",
-                description: "Equal to the sum of its divisors",
-                check: (n) => isPerfectNumber(n)
             },
             power_of_three: {
                 name: "Power of Three",
@@ -666,9 +645,44 @@
             power_of_five: {
                 name: "Power of Five",
                 emoji: "5️⃣",
-                rarity: "rare",
+                rarity: "epic",
                 description: "Power of 5",
                 check: (n) => isPowerOfFive(n)
+            },
+            triangular: {
+                name: "Triangular",
+                emoji: "△",
+                rarity: "uncommon",
+                description: "Partial sum of the natural numbers",
+                check: (n) => isTriangular(n)
+            },
+            fibonacci: {
+                name: "Fibonacci",
+                emoji: "🌀",
+                rarity: "epic",
+                description: "Member of the fibonacci sequence",
+                check: (n) => isFibonacci(n)
+            },
+            narayana: {
+                name: "Narayana",
+                emoji: "ψ",
+                rarity: "rare",
+                description: "Member of the narayana sequence",
+                check: (n) => isNarayana(n)
+            },
+            padovan: {
+                name: "Pardovan",
+                emoji: "🔼",
+                rarity: "rare",
+                description: "Member of the pardovan sequence",
+                check: (n) => isPadovan(n)
+            },
+            lucas: {
+                name: "Lucas",
+                emoji: "⭕",
+                rarity: "epic",
+                description: "Member of the lucas sequence",
+                check: (n) => isLucas(n)
             },
             catalan: {
                 name: "Catalan",
@@ -683,6 +697,13 @@
                 rarity: "legendary",
                 description: "Partial product of the natural numbers",
                 check: (n) => isFactorial(n)
+            },
+            perfect_number: {
+                name: "Perfect",
+                emoji: "✨",
+                rarity: "mythic",
+                description: "Equal to the sum of its divisors",
+                check: (n) => isPerfectNumber(n)
             }
         };
 
@@ -771,6 +792,30 @@
 
         function isFibonacci(n) {
             let a = 0, b = 1;
+            while (a < n) {
+                [a, b] = [b, a + b];
+            }
+            return a === n;
+        }
+        
+        function isNarayana(n) {
+            let a = 1, b = 1, c = 1;
+            while (a < n) {
+                [a, b, c] = [b, c, a + c];
+            }
+            return a === n;
+        }
+        
+        function isPadovan(n) {
+            let a = 1, b = 1, c = 1;
+            while (a < n) {
+                [a, b, c] = [b, c, a + b];
+            }
+            return a === n;
+        }
+        
+        function isLucas(n) {
+            let a = 2, b = 1;
             while (a < n) {
                 [a, b] = [b, a + b];
             }
